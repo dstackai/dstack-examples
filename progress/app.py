@@ -1,16 +1,22 @@
 from time import sleep
 import dstack as ds
 
+from dstack import trange
 
-def markdown_handler(self: ds.Markdown):
-    for _ in ds.trange(100):
+# Create an instance of the application
+app = ds.app()
+
+
+# A handler that sets the text to the markdown control
+def markdown_handler(self):
+    for _ in trange(100):
         sleep(0.5)
     self.text = "Finished"
 
 
-app = ds.app()
-
+# A markdown control
 app.markdown(handler=markdown_handler)
 
+# Deploy the application with the name "tqdm" and print its URL
 result = app.deploy("tqdm")
 print(result.url)

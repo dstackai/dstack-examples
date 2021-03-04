@@ -38,8 +38,8 @@ def output_handler(self, countries):
 
 
 # An output that shows companies based on the selected country
-app.output(handler=output_handler, depends=[countries])
+app.output(handler=output_handler, depends=[countries], require_apply=True)
 
-# Deploy the application with the name "controls/select_depends" and print its URL
-url = app.deploy("controls/select_depends")
+# Deploy the application with the name "controls/select_depends_apply" and print its URL
+url = app.deploy("controls/select_depends_apply")
 print(url)
