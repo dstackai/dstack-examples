@@ -10,13 +10,13 @@ def get_data():
 
 
 # An utility function that returns regions
-def get_regions():
+def regions_handler(self):
     df = get_data()
-    return df["Region"].unique().tolist()
+    self.items = df["Region"].unique().tolist()
 
 
 # A drop-down control that shows regions
-regions = app.select(items=get_regions, label="Region")
+regions = app.select(handler=regions_handler, label="Region")
 
 
 # A handler that updates the drop-down with counties based on the selected region

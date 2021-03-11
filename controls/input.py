@@ -12,7 +12,7 @@ def markdown_handler(self, name):
 
 
 # an input control
-name = app.input(label="What's your name?")
+name = app.input(placeholder="What's your name?")
 
 # a markdown output that greets the users using the given name
 app.markdown(handler=markdown_handler, depends=[name])

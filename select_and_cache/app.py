@@ -7,9 +7,9 @@ def get_data():
     return pd.read_csv("https://www.dropbox.com/s/cat8vm6lchlu5tp/data.csv?dl=1", index_col=0)
 
 
-def get_regions():
+def regions_handler(self):
     df = get_data()
-    return df["Region"].unique().tolist()
+    self.items = df["Region"].unique().tolist()
 
 
 def countries_handler(self: ds.Select, regions: ds.Select):
@@ -21,8 +21,9 @@ app = ds.app()
 
 sidebar = app.sidebar()
 
-regions = sidebar.select(items=get_regions, label="Region")
-countries = sidebar.select(handler=countries_handler, label="Country", multiple=True, depends=[regions])
+regions = sidebar.select(handler=regions_handler)
+countries = sidebar.select(handler=countries_handler, multiple=True,
+                           placeholder="Select a country", depends=[regions])
 
 
 def output_handler(self: ds.Output, countries: ds.Select):

@@ -18,11 +18,11 @@ def app_handler(self, uploader):
 
 
 # A file uploader control
-uploader = app.uploader(label="Select a CSV file")
+uploader = app.uploader(label="Select CSV files", multiple=True)
 
 # An output control that shows the content of the uploaded file
 app.output(handler=app_handler, depends=[uploader])
 
 # Deploy the application with the name "controls/uploader" and print its URL
-url = app.deploy("controls/uploader")
+url = app.deploy("controls/uploader_multiple")
 print(url)
