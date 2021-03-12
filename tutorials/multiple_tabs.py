@@ -15,15 +15,14 @@ def get_data():
 companies_tab = app.tab("Companies", columns=12)
 
 
-# an utility function that returns regions
-@ds.cache()  # caching the result
-def get_regions():
+# A handler that updates the regions drop down control
+def regions_handler(self):
     df = get_data()
-    return df["Region"].unique().tolist()
+    self.items = df["Region"].unique().tolist()
 
 
 # a drop-down control inside the sidebar showing regions
-regions = companies_tab.select(items=get_regions, label="Region", colspan=6, rowspan=1)
+regions = companies_tab.select(handler=regions_handler, placeholder="Region", colspan=6, rowspan=1)
 
 
 # a handler that updates the countries drop-down based on the selected region
@@ -33,7 +32,8 @@ def countries_handler(self, regions):
 
 
 # a drop-down control inside the sidebar showing countries based on the selected region
-countries = companies_tab.select(handler=countries_handler, label="Country", depends=[regions], colspan=6, rowspan=1)
+countries = companies_tab.select(handler=countries_handler, placeholder="Country", depends=[regions], colspan=6,
+                                 rowspan=1)
 
 
 # a handler that updates the table output showing companies based on the selected country

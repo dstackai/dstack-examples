@@ -12,18 +12,17 @@ def get_data():
     return pd.read_csv("https://www.dropbox.com/s/cat8vm6lchlu5tp/data.csv?dl=1", index_col=0)
 
 
-# An utility function that returns regions
-@ds.cache()  # caching the result
-def get_regions():
+# A handler that updates the regions drop and drop control
+def regions_handler(self):
     df = get_data()
-    return df["Region"].unique().tolist()
+    self.items = df["Region"].unique().tolist()
 
 
 # Create an instance of sidebar
 sidebar = app.sidebar()
 
 # A drop-down control inside the sidebar showing regions
-regions = sidebar.select(items=get_regions, label="Region")
+regions = sidebar.select(handler=regions_handler, placeholder="Region")
 
 
 # A handler that updates the countries drop-down based on the selected region
@@ -33,7 +32,7 @@ def countries_handler(self, regions):
 
 
 # A drop-down control inside the sidebar showing countries based on the selected region
-countries = sidebar.select(handler=countries_handler, label="Country", depends=[regions])
+countries = sidebar.select(handler=countries_handler, placeholder="Country", depends=[regions])
 
 
 # A handler that updates the table output showing companies based on the selected country

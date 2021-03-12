@@ -9,7 +9,7 @@ app = ds.app()
 
 # A handler that sets the text to the markdown control
 def markdown_handler(self):
-    for _ in trange(100):
+    for _ in trange(100, desc="Calculating some stupid data", unit="task"):
         sleep(0.5)
     self.text = "Finished"
 
