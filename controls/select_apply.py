@@ -10,13 +10,13 @@ def get_data():
 
 
 # An utility function that returns regions
-def get_regions():
+def regions_handler(self):
     df = get_data()
-    return df["Region"].unique().tolist()
+    self.items = df["Region"].unique().tolist()
 
 
 # A drop-down control that shows regions
-regions = app.select(items=get_regions, label="Region")
+regions = app.select(handler=regions_handler, label="Region")
 
 
 # A handler that updates the drop-down with counties based on the selected region
@@ -40,6 +40,6 @@ def output_handler(self, countries):
 # An output that shows companies based on the selected country
 app.output(handler=output_handler, depends=[countries], require_apply=True)
 
-# Deploy the application with the name "controls/select_depends_apply" and print its URL
-url = app.deploy("controls/select_depends_apply")
+# Deploy the application with the name "controls/select_depends" and print its URL
+url = app.deploy("controls/select_apply")
 print(url)
