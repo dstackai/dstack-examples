@@ -1,8 +1,9 @@
 workflows:
   - name: hello
-    image: tensorflow/tensorflow:latest-gpu
-    commands:
-      - python3 main.py
-    resources:
-      gpu:
-        count: 1
+    template:
+      image: tensorflow/tensorflow:latest-gpu
+      commands:
+        - python3 main.py
+      resources:
+        memory: 32GB
+        gpu: 1
