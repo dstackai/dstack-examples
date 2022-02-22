@@ -1,8 +1,20 @@
 workflows:
-  - name: hello
-    image: tensorflow/tensorflow:latest-gpu
+  - name: download-mnist
+    image: python:3.9
     commands:
-      - python3 main.py
+      - pip install -r requirements.txt
+      - python3 download.py
+    artifacts:
+      - data
+
+  - name: train-mnist
+    image: pytorch/pytorch:1.10.0-cuda11.3-cudnn8-runtime
+    commands:
+      - pip install -r requirements.txt
+      - python3 train.py
+    artifacts:
+      - model
+    depends-on:
+      - download-mnist
     resources:
-      memory: 32GB
       gpu: 1
