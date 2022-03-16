@@ -14,4 +14,3 @@ workflows:
       - download-mnist
     artifacts:
       - model
-    gpu: 1
