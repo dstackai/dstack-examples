@@ -1,6 +1,5 @@
 variables:
-  train-mnist:
-    gpu: 0
+  train:
     batch-size: 64
     test-batch-size: 1000
     epochs: 1

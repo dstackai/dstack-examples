@@ -1,18 +1,18 @@
 workflows:
-  - name: download-mnist
+  - name: download
     provider: python
     requirements: requirements.txt
-    python_script: download.py
+    script: download.py
     artifacts:
       - data
 
-  - name: train-mnist
+  - name: train
     provider: python
     requirements: requirements.txt
-    python_script: train.py
+    script: train.py
     depends-on:
-      - download-mnist
+      - download:latest
     artifacts:
       - model
     resources:
-      gpu: ${{ gpu }}
+      gpu: 1
