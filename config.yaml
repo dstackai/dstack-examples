@@ -1,0 +1,9 @@
+datamodule:
+  batch_size: 32
+model:
+  hidden_size: 64
+  learning_rate: 2e-4
+trainer:
+  accelerator: auto # will switch to GPU if available
+  max_epochs: 5 # set to None to auto-stop on convergence
+resume: true # resume training from the latest checkpoint

@@ -1,18 +1,26 @@
 workflows:
   - name: download
-    provider: python
-    requirements: requirements.txt
-    script: download.py
+    help: "Download the MNIST dataset"
+    provider: bash
+    python: 3.10
+    env:
+      - PYTHONPATH=mnist
+    commands:
+      - pip install -r requirements.txt
+      - python mnist/download.py
     artifacts:
       - data
 
   - name: train
-    provider: python
-    requirements: requirements.txt
-    script: train.py
-    depends-on:
-      - download:latest
+    help: "Train a MNIST model"
+    deps:
+      - download
+    provider: bash
+    requirements: "requirements.txt"
+    env:
+      - PYTHONPATH=mnist
+    commands:
+      - pip install -r requirements.txt
+      - python train.py
     artifacts:
-      - model
-    resources:
-      gpu: 1
+      - lightning_logs
