@@ -14,13 +14,13 @@ workflows:
   - name: train
     help: "Train a MNIST model"
     deps:
-      - download
+      - :mnist_data
     provider: bash
     requirements: "requirements.txt"
     env:
       - PYTHONPATH=mnist
     commands:
       - pip install -r requirements.txt
-      - python train.py
+      - python mnist/train.py
     artifacts:
       - lightning_logs
