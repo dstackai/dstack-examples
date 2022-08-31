@@ -9,12 +9,12 @@ workflows:
       - pip install -r requirements.txt
       - python mnist/download.py
     artifacts:
-      - data
+      - path: data
 
   - name: train
     help: "Train a MNIST model"
     deps:
-      - :mnist_data
+      - tag: mnist_data
     provider: bash
     requirements: "requirements.txt"
     env:
@@ -23,4 +23,4 @@ workflows:
       - pip install -r requirements.txt
       - python mnist/train.py
     artifacts:
-      - lightning_logs
+      - path: lightning_logs
