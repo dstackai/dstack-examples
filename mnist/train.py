@@ -37,17 +37,19 @@ def get_ckpt_path(cfg) -> Path:
 
 class MNISTDataModule(pl.LightningDataModule):
     # Datamodule adapted from https://pytorch-lightning.readthedocs.io/en/stable/extensions/datamodules.html#what-is-a-datamodule
-    def __init__(self, data_dir: str = DIR / 'data', batch_size: int = 32, num_workers: int = os.cpu_count()):
+    def __init__(self, data_dir: str = DIR / 'data', batch_size: int = 32, num_workers: int = os.cpu_count(),
+                 download: bool = True):
         super().__init__()
         self.data_dir = data_dir
         self.batch_size = batch_size
         self.num_workers = num_workers
         self.transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))])
+        self.download = download
 
     def prepare_data(self):
         # download
-        MNIST(self.data_dir, train=True, download=True)
-        MNIST(self.data_dir, train=False, download=True)
+        MNIST(self.data_dir, train=True, download=self.download)
+        MNIST(self.data_dir, train=False, download=self.download)
 
     def setup(self, stage: Optional[str] = None):
         # Assign train/val datasets for use in dataloaders

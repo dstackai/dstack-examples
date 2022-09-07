@@ -1,5 +1,6 @@
 datamodule:
   batch_size: 32
+  download: false # download the dataset if not exists
 model:
   hidden_size: 64
   learning_rate: 2e-4
