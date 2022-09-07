@@ -2,7 +2,6 @@ workflows:
   - name: download
     help: "Download the MNIST dataset"
     provider: bash
-    python: 3.10
     env:
       - PYTHONPATH=mnist
     commands:
