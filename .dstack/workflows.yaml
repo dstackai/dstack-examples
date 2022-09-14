@@ -2,8 +2,6 @@ workflows:
   - name: download
     help: "Download the MNIST dataset"
     provider: bash
-    env:
-      - PYTHONPATH=mnist
     commands:
       - pip install -r requirements.txt
       - python mnist/download.py
@@ -15,9 +13,6 @@ workflows:
     deps:
       - tag: mnist_data
     provider: bash
-    requirements: "requirements.txt"
-    env:
-      - PYTHONPATH=mnist
     commands:
       - pip install -r requirements.txt
       - python mnist/train.py

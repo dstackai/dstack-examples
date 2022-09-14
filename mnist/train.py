@@ -15,8 +15,8 @@ from torchvision.datasets import MNIST
 DIR = Path(__file__).parent.parent
 
 
-def get_ckpt_path(cfg) -> Path:
-    '''Get the ckpt_path for resuming training from the last of lightning_logs/version_x if requested and available'''
+def get_ckpt_path(cfg) -> Optional[Path]:
+    """Get the ckpt_path for resuming training from the last of lightning_logs/version_x if requested and available"""
     ckpt_path = None  # default
     if not cfg.get('resume'):  # don't resume
         return ckpt_path
@@ -133,13 +133,13 @@ class LitMNIST(pl.LightningModule):
         return optimizer
 
 
-@hydra.main(version_base=None, config_path=DIR, config_name='config')
+@hydra.main(version_base=None, config_path=str(DIR), config_name='config')
 def main(cfg):
     dm = MNISTDataModule(**cfg.datamodule)
     model = LitMNIST(**cfg.model)
 
     trainer = pl.Trainer(**cfg.trainer)
-    trainer.fit(model, datamodule=dm, ckpt_path=get_ckpt_path(cfg))
+    trainer.fit(model, datamodule=dm, ckpt_path=str(p) if (p := get_ckpt_path(cfg)) else None)
     trainer.test(datamodule=dm, ckpt_path='best')
 
 
