@@ -1,0 +1,8 @@
+workflows:
+  - name: hello-fastapi
+    help: "This workflow runs a FastAPI application"
+    provider: bash
+    ports: 1
+    commands:
+      - pip install fastapi uvicorn
+      - uvicorn apps.hello_fastapi:app --port $PORT_0 --host 0.0.0.0

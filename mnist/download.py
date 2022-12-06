@@ -3,7 +3,7 @@ from pathlib import Path
 import hydra
 from torchvision.datasets import MNIST
 
-DIR = Path(__file__).parent.parent
+DIR = Path(__file__).parent
 
 
 @hydra.main(version_base=None, config_path=str(DIR), config_name='config')

@@ -1,0 +1,31 @@
+workflows:
+  - name: sd-checkpoints
+    help: "This workflow downloads the model checkpoints"
+    provider: bash
+    commands:
+      - conda install psutil orjson -y
+      - pip install -e git+https://github.com/CompVis/taming-transformers.git@master#egg=taming-transformers
+      - pip install -e git+https://github.com/openai/CLIP.git@main#egg=clip
+      - pip install -e git+https://github.com/peterschmidt85/stable_diffusion_inference@main#egg=sd_inference
+      - python stability_diffusion/download.py
+    artifacts:
+      - path: ./checkpoints
+      - path: /root/.cache/huggingface/hub
+    resources:
+      memory: 16GB
+
+  - name: sd-generate
+    help: "This workflow generates images using the model checkpoints from the `sd-checkpoints` workflow"
+    provider: bash
+    deps:
+      - workflow: sd-checkpoints
+    commands:
+      - conda install psutil orjson -y
+      - pip install -e git+https://github.com/CompVis/taming-transformers.git@master#egg=taming-transformers
+        pip install -e git+https://github.com/openai/CLIP.git@main#egg=clip
+      - pip install -e git+https://github.com/peterschmidt85/stable_diffusion_inference@main#egg=sd_inference
+      - python stability_diffusion/generate.py ${{ run.args }}
+    artifacts:
+      - path: ./output
+    resources:
+      memory: 16GB

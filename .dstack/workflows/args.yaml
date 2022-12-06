@@ -1,0 +1,7 @@
+workflows:
+  - name: print-args
+    help: "This workflows allows to pass arguments to the workflow via `dstack run`.
+           Example: `dstack run print-args -l 'Hello, world!'`"
+    provider: bash
+    commands:
+      - python args/print-args.py ${{ run.args }}

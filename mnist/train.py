@@ -8,11 +8,11 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 from torch.utils.data import DataLoader, random_split
-from torchmetrics import Accuracy
+from torchmetrics.classification import MulticlassAccuracy
 from torchvision import transforms
 from torchvision.datasets import MNIST
 
-DIR = Path(__file__).parent.parent
+DIR = Path(__file__).parent
 
 
 def get_ckpt_path(cfg) -> Optional[Path]:
@@ -101,7 +101,7 @@ class LitMNIST(pl.LightningModule):
             nn.Linear(hidden_size, self.num_classes),
         )
 
-        self.accuracy = Accuracy()
+        self.accuracy = MulticlassAccuracy(self.num_classes)
 
     def forward(self, x):
         return self.model(x)

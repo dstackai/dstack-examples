@@ -1,0 +1,27 @@
+workflows:
+  - name: cat-txt
+    help: "This workflows displays the contents of the `output/hello.txt` file from the `txt-file` tag.
+           Make sure to run the `hello-txt` workflow beforehand and assign the `txt-file` tag to it."
+    provider: bash
+    deps:
+      - tag: txt-file
+    commands:
+      - cat output/hello.txt
+
+  - name: cat-txt-2
+    help: "This workflows displays the contents of the `output/hello.txt` file from the `hello-txt` workflow.
+           Make sure to run the `hello-txt` workflow beforehand."
+    provider: bash
+    deps:
+      - workflow: hello-txt
+    commands:
+      - cat output/hello.txt
+
+  - name: cat-txt-3
+    help: "This workflows displays the contents of the `output/hello.txt` file from the `hello-txt` workflow.
+           Make sure to run the `hello-txt` workflow inside the `dstackai/dstack` repo beforehand."
+    provider: bash
+    deps:
+      - workflow: dstackai/dstack/hello-txt
+    commands:
+      - cat output/hello.txt

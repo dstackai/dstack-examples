@@ -1,0 +1,50 @@
+workflows:
+  - name: gpu-v100
+    help: "This workflow uses one NVIDIA Tesla V100 GPU"
+    provider: bash
+    commands:
+      - nvidia-smi
+    resources:
+      gpu:
+        name: V100
+        count: 1
+
+  - name: gpu-default
+    help: "This workflow uses one default GPU (NVIDIA Tesla K80)"
+    provider: bash
+    commands:
+      - nvidia-smi
+    resources:
+      gpu: 1
+
+  - name: mem-64gb
+    provider: bash
+    commands:
+      - free --giga
+    resources:
+      memory: 64GB
+
+  - name: shm-size
+    help: "This workflow sets the size of the shared memory"
+    provider: bash
+    commands:
+      - df -H /dev/shm
+    resources:
+      shm_size: 16GB
+
+  - name: gpu-i
+    help: "This workflow uses an interruptible instance with one GPU"
+    provider: bash
+    commands:
+      - nvidia-smi
+    resources:
+      interruptible: true
+      gpu: 1
+
+  - name: local-hello
+    help: "This workflow runs locally by default"
+    provider: bash
+    commands:
+      - echo "Hello, world!"
+    resources:
+      local: true

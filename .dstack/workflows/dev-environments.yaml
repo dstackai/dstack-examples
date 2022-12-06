@@ -1,0 +1,20 @@
+workflows:
+  - name: ide-code
+    help: "This workflows launches a VS Code dev environment."
+    provider: code
+
+  - name: ide-code-gpu
+    help: "This workflows launches a VS Code and requires 64GB of memory and one default GPU."
+    provider: code
+    resources:
+      memory: 64GB
+      gpu: 1
+
+  - name: ide-lab
+    help: "This workflows launches a JupyterLab dev environment."
+    provider: lab
+
+  - name: ide-notebook
+    help: "This workflows launches a Jupyter notebook dev environment."
+    provider: notebook
+

@@ -1,0 +1,6 @@
+workflows:
+  - name: hello
+    help: "This workflow prints 'Hello, world!'"
+    provider: bash
+    commands:
+      - echo "Hello, world!"
