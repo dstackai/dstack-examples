@@ -1,21 +1,18 @@
 workflows:
-  - name: mnist-download
-    help: "This workflow downloads the MNIST dataset"
+  - name: mnist-data
     provider: bash
     commands:
-      - pip install -r mnist/requirements.txt
-      - python mnist/download.py
+      - pip install torchvision
+      - python mnist/mnist_data.py
     artifacts:
-      - path: ./mnist/data
+      - path: ./data
 
-  - name: mnist-train
-    help: "This workflow trains a MNIST model using the dataset from the `mnist-download` workflow.
-           Before running it, run the `mnist-download` workflow and add the `mnist-data` tag to it."
-    deps:
-      - tag: mnist-data
+  - name: train-mnist
     provider: bash
+    deps:
+      - workflow: mnist-data
     commands:
-      - pip install -r mnist/requirements.txt
-      - python mnist/train.py
+      - pip install torchvision pytorch-lightning tensorboard
+      - python mnist/train_mnist.py
     artifacts:
       - path: ./lightning_logs
