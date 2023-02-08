@@ -1,0 +1,34 @@
+workflows:
+  - name: stable-diffusion
+    provider: bash
+    commands:
+      - pip install -r stable_diffusion/requirements.txt
+      - python stable_diffusion/stable_diffusion.py
+    artifacts:
+      - path: ./models
+    resources:
+      memory: 16GB
+
+  - name: code-stable
+    provider: code
+    deps:
+      - workflow: stable-diffusion
+    setup:
+      - pip install -r stable_diffusion/requirements.txt
+    artifacts:
+      - path: ./output
+    resources:
+      memory: 16GB
+
+  - name: prompt-stable
+    provider: bash
+    deps:
+      - workflow: stable-diffusion
+    commands:
+      - pip install -r stable_diffusion/requirements.txt
+      - python stable_diffusion/prompt_stable.py ${{ run.args }}
+    artifacts:
+      - path: ./output
+    resources:
+      memory: 16GB
+
