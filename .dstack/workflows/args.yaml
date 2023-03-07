@@ -4,4 +4,4 @@ workflows:
            Example: `dstack run print-args -l 'Hello, world!'`"
     provider: bash
     commands:
-      - python args/print-args.py ${{ run.args }}
+      - python basics/args/print-args.py ${{ run.args }}

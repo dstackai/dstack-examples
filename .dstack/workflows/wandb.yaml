@@ -1,0 +1,12 @@
+workflows:
+  - name: wandb-login
+    provider: bash
+    commands:
+      - pip install wandb
+      - wandb login
+
+  - name: wandb-init
+    provider: bash
+    commands:
+      - pip install wandb
+      - python integrations/wandb/main.py

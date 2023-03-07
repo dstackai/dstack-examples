@@ -11,7 +11,7 @@ workflows:
     help: "This workflow creates files in `output` and save them as artifacts in real-time"
     provider: bash
     commands:
-      - bash artifacts/hello.sh
+      - bash basics/artifacts/hello.sh
     artifacts:
       - path: ./output
         mount: true
