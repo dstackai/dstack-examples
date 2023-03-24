@@ -24,7 +24,7 @@ class MNISTModel(LightningModule):
         return torch.optim.Adam(self.parameters(), lr=0.02)
 
 
-BATCH_SIZE = 256 if torch.cuda.is_available() else 64
+BATCH_SIZE = torch.cuda.device_count() * 64 if torch.cuda.is_available() else 64
 
 if __name__ == "__main__":
     # Init our model
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     # Initialize a trainer
     trainer = Trainer(
         accelerator="auto",
-        devices=1 if torch.cuda.is_available() else None,  # limiting got iPython runs
+        devices="auto",
         max_epochs=3,
         callbacks=[TQDMProgressBar(refresh_rate=20)],
     )
