@@ -1,14 +1,4 @@
-import shutil
-
-from diffusers import StableDiffusionPipeline
-
-
-def main():
-    _, cache_folder = StableDiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5",
-                                                              return_cached_folder=True)
-    # Copy the model from the cache folder (that uses symlinks) to a local dir (that doesn't use symlinks)
-    shutil.copytree(cache_folder, "./models/runwayml/stable-diffusion-v1-5", dirs_exist_ok=True)
-
+from huggingface_hub import snapshot_download
 
 if __name__ == '__main__':
-    main()
+    snapshot_download("runwayml/stable-diffusion-v1-5", local_dir="./models/runwayml/stable-diffusion-v1-5")
