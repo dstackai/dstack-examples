@@ -1,7 +1,6 @@
 tasks:
   - init: |
-      pip install dstack
-      ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
+      pip install dstack -q
       clear
       dstack init
 vscode:
