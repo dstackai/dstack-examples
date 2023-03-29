@@ -1,6 +1,9 @@
 tasks:
-  - init: pip install dstack
-
+  - init: |
+      pip install dstack
+      ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
+      clear
+      dstack init
 vscode:
   extensions:
     - ms-python.python
