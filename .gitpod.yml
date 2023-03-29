@@ -1,0 +1,6 @@
+tasks:
+  - init: pip install dstack
+
+vscode:
+  extensions:
+    - ms-python.python
