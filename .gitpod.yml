@@ -1,7 +1,7 @@
 tasks:
   - init: |
       ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
-      pip install dstack
+      pip --disable-pip-version-check install dstack
       dstack init
 vscode:
   extensions:
