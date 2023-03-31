@@ -1,6 +1,8 @@
 tasks:
   - init: |
       ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
+      PYTHON=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
+      docker pull "dstackai/miniforge:py$PYTHON-0.1
       pip --disable-pip-version-check install dstack
       dstack init
 vscode:
