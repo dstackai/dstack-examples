@@ -2,7 +2,7 @@
 
 Welcome to `dstack`'s Playground.
 
-Now that `dstack` is installed and ready, execute the commands below to navigate through the examples.
+Once `dstack` is installed and ready, execute the commands below to navigate through the examples.
 
 ### 1. Init
 

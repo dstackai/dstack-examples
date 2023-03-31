@@ -1,10 +1,12 @@
 tasks:
   - init: |
       open PLAYGROUND.md
+      gem install cowsay lolcat
       ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
       PYTHON=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
       docker pull "dstackai/miniforge:py$PYTHON-0.1"
       pip --disable-pip-version-check install dstack
+    command: clear && cowsay -f dragon "The playground is ready" | lolcat
 vscode:
   extensions:
     - ms-python.python
