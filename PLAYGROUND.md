@@ -50,7 +50,7 @@ workflows:
 Run this workflow locally using the `dstack run` command:
 
 ```shell
-dstack run hello-py
+dstack run hello-pandas
 ```
 
 ### 4. Conda
@@ -65,7 +65,7 @@ workflows:
   - name: hello-conda
     provider: bash
     commands:
-      - conda install pandas
+      - conda install pandas -y
       - python python/hello_pandas.py
 ```
 
