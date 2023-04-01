@@ -2,8 +2,8 @@ workflows:
   - name: stable-diffusion
     provider: bash
     commands:
-      - pip install -r tutorials/stable_diffusion/requirements.txt
-      - python tutorials/stable_diffusion/stable_diffusion.py
+      - pip install -r examples/stable_diffusion/requirements.txt
+      - python examples/stable_diffusion/stable_diffusion.py
     artifacts:
       - path: ./models
     resources:
@@ -14,7 +14,7 @@ workflows:
     deps:
       - workflow: stable-diffusion
     setup:
-      - pip install -r tutorials/stable_diffusion/requirements.txt
+      - pip install -r examples/stable_diffusion/requirements.txt
     artifacts:
       - path: ./output
     resources:
@@ -25,8 +25,8 @@ workflows:
     deps:
       - workflow: stable-diffusion
     commands:
-      - pip install -r tutorials/stable_diffusion/requirements.txt
-      - python tutorials/stable_diffusion/prompt_stable.py ${{ run.args }}
+      - pip install -r examples/stable_diffusion/requirements.txt
+      - python examples/stable_diffusion/prompt_stable.py ${{ run.args }}
     artifacts:
       - path: ./output
     resources:

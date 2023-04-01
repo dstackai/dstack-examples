@@ -9,4 +9,4 @@ workflows:
     provider: bash
     commands:
       - pip install wandb
-      - python tutorials/wandb/main.py
+      - python examples/wandb/main.py

@@ -1,4 +1,4 @@
-# dstack Playground
+# Playground
 
 This repository contains a collection of examples demonstrating how to use `dstack`.
 
@@ -14,7 +14,7 @@ If you'd like to run the examples on your own machine, follow these instructions
 <div class="termy">
 
 ```shell
-$ pip install dstack
+pip install dstack
 ```
 
 </div>
@@ -24,11 +24,11 @@ $ pip install dstack
 <div class="termy">
 
 ```shell
-$ git clone https://github.com/dstackai/dstack-playground
+git clone https://github.com/dstackai/dstack-playground
 ```
 
 </div>
 
-#### 3. Run examples
+#### 3. Follow steps
 
-Follow the [`PLAYGROUND.md`](PLAYGROUND.md) steps.
+Follow [`PLAYGROUND.md`](PLAYGROUND.md)

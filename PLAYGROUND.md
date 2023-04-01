@@ -141,8 +141,6 @@ the remote.
 dstack run hello --remote
 ```
 
-### 8. Resources
-
 When running a workflow remotely, you can specify which [resources](https://docs.dstack.ai/reference/providers/bash/#resources) to use, such as GPU and memory.
 
 Review the [resources.yaml](.dstack/workflows/resources.yaml) file containing the `gpu-default` workflow, which 
@@ -164,7 +162,7 @@ Run this workflow locally using the `dstack run` command:
 dstack run gpu-default
 ```
 
-### 9. Providers
+### 8. Providers
 
 `dstack` supports [`bash`](https://docs.dstack.ai/reference/providers/bash), [`docker`](https://docs.dstack.ai/reference/providers/docker), 
 [`code`](https://docs.dstack.ai/reference/providers/code), [`lab`](https://docs.dstack.ai/reference/providers/lab), 
@@ -179,7 +177,7 @@ Run this workflow locally using the `dstack run` command:
 dstack run bash -c 'echo "Hello, world!"'
 ```
 
-### 10. Apps
+### 9. Apps
 
 Workflow can host apps. To do this, use `ports` and specify the number ports needed to host apps.
 The port numbers will be passes to the workflow via environment variables `PORT_0`, `PORT_1`, etc.
@@ -203,7 +201,7 @@ Run this workflow locally using the `dstack run` command:
 dstack run hello-fastapi
 ```
 
-### 11. Secrets
+### 10. Secrets
 
 Secrets enable accessing passwords and secure tokens from workflows without embedding them in the code.
 
@@ -223,7 +221,7 @@ Run the following command to test it:
 dstack run bash -c 'echo $MY_SECRET_TOKEN'
 ```
 
-### 12. Args
+### 11. Args
 
 If you pass any arguments to the dstack run command, they can be accessed from the workflow YAML file via the `${{ run.args }}` expression.
 
@@ -248,7 +246,7 @@ dstack run hello-args 'Hello, world!'
 
 1. Go ahead and [install](https://docs.dstack.ai/installation) `dstack` on your local machine.
 2. Check the [Quick start](https://docs.dstack.ai/quick-start),
-  [Tensorboard](https://docs.dstack.ai/tutorials/tensorboard),
-  [Stable Diffusion](https://docs.dstack.ai/tutorials/stable-diffusion), and
-  [Weights & Biases](https://docs.dstack.ai/tutorials/wandb) tutorials.
+  [Tensorboard](https://docs.dstack.ai/examples/tensorboard),
+  [Stable Diffusion](https://docs.dstack.ai/examples/stable-diffusion), and
+  [Weights & Biases](https://docs.dstack.ai/examples/wandb) examples.
 3. Join our community on our [Slack channel](https://join.slack.com/t/dstackai/shared_invite/zt-xdnsytie-D4qU9BvJP8vkbkHXdi6clQ).
