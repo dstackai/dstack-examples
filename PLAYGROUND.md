@@ -121,7 +121,7 @@ dstack run cat-txt-2
 
 If you don't want to refer to the last run of the workflow but a specific one, you can use [tags](https://docs.dstack.ai/usage/deps/#tags).
 
-### 7. Remotes
+### 7. Remote
 
 By default, workflows run locally. To run workflows remotely, you need to first configure a remote using the [`dstack
 config`](https://docs.dstack.ai/reference/cli/config/) command. 

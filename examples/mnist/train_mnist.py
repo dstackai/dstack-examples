@@ -31,7 +31,7 @@ if __name__ == "__main__":
     mnist_model = MNISTModel()
 
     # Init DataLoader from MNIST Dataset
-    train_ds = MNIST("./data", train=True, download=False, transform=transforms.ToTensor())
+    train_ds = MNIST("./data", train=True, download=True, transform=transforms.ToTensor())
     train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE)
 
     # Initialize a trainer

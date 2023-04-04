@@ -1,0 +1,27 @@
+name: Train MNIST
+
+on:
+  workflow_dispatch:
+
+jobs:
+  init:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+      - name: Install dstack
+        run: |
+          pip install dstack
+      - name: Configure the AWS remote
+        run: |
+          dstack config aws --bucket ${{ secrets.DSTACK_AWS_S3_BUCKET }} --region ${{ secrets.DSTACK_AWS_REGION }}
+      - name: Initialize dstack
+        run: |
+          ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
+          dstack init --token ${{ secrets.GITHUB_TOKEN }}
+      - name: Run dstack workflow
+        run: |
+          dstack run train-mnist --remote --gpu 1
