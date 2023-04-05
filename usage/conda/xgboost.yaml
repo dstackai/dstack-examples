@@ -1,0 +1,4 @@
+name: xgboost-env
+
+dependencies:
+  - python=3.10

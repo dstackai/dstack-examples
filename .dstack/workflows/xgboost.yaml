@@ -1,0 +1,8 @@
+workflows:
+  - name: xgboost
+    provider: bash
+    deps:
+      - workflow: xgboost-env
+    commands:
+      - conda activate xgboost-env
+      - python examples/xgboost/train.py ${{ run.args }}

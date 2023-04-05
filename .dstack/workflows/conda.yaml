@@ -21,3 +21,14 @@ workflows:
     commands:
       - conda activate myenv
       - python usage/conda/hello_pandas.py
+
+  - name: xgboost-env
+    help: "This workflow prepares myenv Conde environment with xgboost installed."
+    commands:
+      - conda env create --file usage/conda/xgboost.yaml
+      - conda activate xgboost-env
+      - conda install -y scikit-learn
+      - conda install -y xgboost
+    provider: bash
+    artifacts:
+      - path: /opt/conda/envs/xgboost-env
