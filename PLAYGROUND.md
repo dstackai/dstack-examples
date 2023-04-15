@@ -248,5 +248,5 @@ dstack run hello-args 'Hello, world!'
 2. Check the [Quick start](https://docs.dstack.ai/quick-start),
   [Tensorboard](https://docs.dstack.ai/tutorials/tensorboard),
   [Stable Diffusion](https://docs.dstack.ai/tutorials/stable-diffusion), and
-  [Weights & Biases](https://docs.dstack.ai/examples/wandb) tutorials.
+  [Weights & Biases](https://docs.dstack.ai/tutorials/wandb) tutorials.
 3. Join our community on our [Slack channel](https://join.slack.com/t/dstackai/shared_invite/zt-xdnsytie-D4qU9BvJP8vkbkHXdi6clQ).

@@ -5,6 +5,6 @@ workflows:
     commands:
       - pip install torchvision pytorch-lightning tensorboard
       - tensorboard --port $PORT_0 --host 0.0.0.0 --logdir ./lightning_logs &
-      - python examples/tensorboard/train.py
+      - python tutorials/tensorboard/train.py
     artifacts:
       - path: ./lightning_logs
