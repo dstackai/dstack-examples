@@ -1,0 +1,14 @@
+workflows:
+  - name: dolly
+    provider: bash
+    ports: 1
+    commands:
+      - pip install -r tutorials/dolly/requirements.txt
+      - python tutorials/dolly/chat.py
+    cache:
+      - ~/.cache/pip
+    resources:
+      gpu:
+        name: A100
+      memory: 60GB
+      interruptible: true
