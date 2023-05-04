@@ -3,7 +3,7 @@ workflows:
     provider: bash
     commands:
       - conda install pandas -y
-      - python python/hello_pandas.py
+      - python usage/python/hello_pandas.py
 
   - name: setup-conda
     help: "This workflow prepares the myenv Conda environment"
