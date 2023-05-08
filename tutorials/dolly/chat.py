@@ -34,7 +34,7 @@ with gr.Blocks(theme=theme) as demo:
 
 
     def bot(history):
-        history[-1][1] = generate_text(history[-1][0])
+        history[-1][1] = generate_text(history[-1][0])[0]["generated_text"]
         return history
 
 
