@@ -18,3 +18,9 @@ workflows:
     help: "This workflows launches a Jupyter notebook dev environment."
     provider: notebook
 
+  - name: hello-ssh
+    provider: bash
+    commands:
+      - tail -f /dev/null
+    ssh: true
+

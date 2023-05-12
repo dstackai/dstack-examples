@@ -9,7 +9,7 @@ model_name = "runwayml/stable-diffusion-v1-5"
 
 local_dir = f"./models/{model_name}"
 if not Path(local_dir).exists() or len(os.listdir(local_dir)) == 0:
-    snapshot_download(model_name, local_dir=local_dir, )
+    snapshot_download(model_name, local_dir=local_dir, local_dir_use_symlinks=False)
 
 pipe = StableDiffusionPipeline.from_pretrained(f"./models/{model_name}", device_map="auto", local_files_only=True)
 
