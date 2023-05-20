@@ -1,8 +1,50 @@
 workflows:
-  - name: hello-fastapi
-    help: "This workflow runs a FastAPI application"
+  - name: fastapi-cpu
+    help: "Runs a FastAPI application using CPU"
     provider: bash
     ports: 1
     commands:
-      - pip install fastapi uvicorn
-      - uvicorn usage.apps.hello_fastapi:app --port $PORT_0 --host 0.0.0.0
+      - pip install -r apps/requirements.txt
+      - uvicorn apps.main:app --port $PORT_0 --host 0.0.0.0
+
+  - name: fastapi-gpu
+    help: "Runs a FastAPI application using GPU"
+    provider: bash
+    ports: 1
+    commands:
+      - pip install -r apps/requirements.txt
+      - uvicorn apps.main:app --port $PORT_0 --host 0.0.0.0
+    resources:
+      gpu:
+        count: 1
+
+  - name: fastapi-gpu-i
+    help: "Runs a FastAPI application using GPU and spot instances"
+    provider: bash
+    ports: 1
+    commands:
+      - pip install -r apps/requirements.txt
+      - uvicorn apps.main:app --port $PORT_0 --host 0.0.0.0
+    resources:
+      gpu:
+        count: 1
+      interruptible: true
+
+  - name: fastapi-docker
+    help: "Runs a FastAPI application using a Docker image"
+    provider: docker
+    image: python:3.11
+    ports: 1
+    commands:
+      - pip install -r apps/requirements.txt
+      - uvicorn apps.main:app --port $PORT_0 --host 0.0.0.0
+
+  - name: fastapi-cached
+    help: "Runs a FastAPI application and caches pip packages"
+    provider: bash
+    ports: 1
+    commands:
+      - pip install -r apps/requirements.txt
+      - uvicorn apps.main:app --port $PORT_0 --host 0.0.0.0
+    cache:
+      - path: ~/.cache/pip

@@ -1,5 +1,5 @@
 workflows:
-  - name: stable-diffusion
+  - name: stable-diffusion-gpu-i
     provider: bash
     ports: 1
     commands:
@@ -13,7 +13,8 @@ workflows:
         count: 1
       memory: 16GB
       interruptible: true
-  - name: debug-stable-diffusion
+
+  - name: code-stable-diffusion-gpu-i
     provider: code
     ports: 1
     setup:

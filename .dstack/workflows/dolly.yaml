@@ -1,12 +1,27 @@
 workflows:
-  - name: dolly
+  - name: gradio-dolly-a100-i
     provider: bash
     ports: 1
     commands:
-      - pip install -r tutorials/dolly/requirements.txt
-      - python tutorials/dolly/chat.py
+      - pip install -r dolly/requirements.txt
+      - python dolly/chat.py
     cache:
       - ~/.cache/pip
+      - ./models
+    resources:
+      gpu:
+        name: A100
+      memory: 60GB
+      interruptible: true
+
+  - name: code-dolly-a100-i
+    provider: code
+    ports: 1
+    setup:
+      - pip install -r dolly/requirements.txt
+    cache:
+      - ~/.cache/pip
+      - ./models
     resources:
       gpu:
         name: A100

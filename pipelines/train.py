@@ -1,3 +1,5 @@
+import argparse
+
 import torch
 from pytorch_lightning import LightningModule, Trainer
 from pytorch_lightning.callbacks.progress import TQDMProgressBar
@@ -24,15 +26,18 @@ class MNISTModel(LightningModule):
         return torch.optim.Adam(self.parameters(), lr=0.02)
 
 
-BATCH_SIZE = torch.cuda.device_count() * 64 if torch.cuda.is_available() else 64
-
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-b', '--batch-size', nargs="?", type=int,
+                        default=torch.cuda.device_count() * 64 if torch.cuda.is_available() else 64)
+    args = parser.parse_args()
+
     # Init our model
     mnist_model = MNISTModel()
 
     # Init DataLoader from MNIST Dataset
     train_ds = MNIST("./data", train=True, download=True, transform=transforms.ToTensor())
-    train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE)
+    train_loader = DataLoader(train_ds, batch_size=args.batch_size)
 
     # Initialize a trainer
     trainer = Trainer(

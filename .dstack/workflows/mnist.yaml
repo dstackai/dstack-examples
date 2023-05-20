@@ -1,8 +1,0 @@
-workflows:
-  - name: train-mnist
-    provider: bash
-    commands:
-      - pip install torchvision pytorch-lightning tensorboard
-      - python tutorials/mnist/train_mnist.py
-    artifacts:
-      - path: ./lightning_logs

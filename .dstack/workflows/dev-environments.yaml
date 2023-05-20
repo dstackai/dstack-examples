@@ -1,26 +1,58 @@
 workflows:
-  - name: ide-code
-    help: "This workflows launches a VS Code dev environment."
+  - name: code-cpu
+    help: "Runs a VS Code IDE"
     provider: code
+    setup:
+      - pip install -r dev-environments/requirements.txt
 
-  - name: ide-code-gpu
-    help: "This workflows launches a VS Code and requires 64GB of memory and one default GPU."
-    provider: code
-    resources:
-      memory: 64GB
-      gpu: 1
-
-  - name: ide-lab
-    help: "This workflows launches a JupyterLab dev environment."
+  - name: lab-cpu
+    help: "Runs a JupyterLab application"
     provider: lab
+    setup:
+      - pip install -r dev-environments/requirements.txt
 
-  - name: ide-notebook
-    help: "This workflows launches a Jupyter notebook dev environment."
-    provider: notebook
+  - name: notebook-cpu
+    help: "Runs a Jupyter notebook application"
+    provider: lab
+    setup:
+      - pip install -r dev-environments/requirements.txt
 
-  - name: hello-ssh
+  - name: code-gpu
+    help: "Runs a VS environment Code with GPU"
+    provider: code
+    setup:
+      - pip install -r dev-environments/requirements.txt
+    resources:
+      gpu:
+        count: 1
+
+  - name: ssh
+    help: "Runs a VM with SSH enabled"
     provider: bash
+    ssh: true
     commands:
       - tail -f /dev/null
-    ssh: true
 
+  - name: code-v100-spot
+    help: "Runs a VS Code IDE with 8 V100 NVIDIA Tesla GPUs using spot instances"
+    provider: code
+    resources:
+      gpu:
+        name: V100
+        count: 8
+      interruptible: true
+
+  - name: code-conda
+    help: "Runs a VS Code IDE with the 'myenv' Conda environment"
+    provider: code
+    python: 3.11
+    setup:
+      - conda env create -f dev-environments/environment.yaml
+
+  - name: code-cached
+    help: "Runs a VS Code IDE with cached folders"
+    provider: code
+    cache:
+      - path: ~/.cache/pip
+      - path: ./data
+      - path: ./models

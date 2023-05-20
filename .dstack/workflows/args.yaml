@@ -1,7 +1,0 @@
-workflows:
-  - name: hello-args
-    help: "This workflows allows to pass arguments to the workflow via `dstack run`.
-           Example: `dstack run print-args -l 'Hello, world!'`"
-    provider: bash
-    commands:
-      - python usage/args/hello_args.py ${{ run.args }}

@@ -1,0 +1,65 @@
+workflows:
+  - name: train-mnist-cpu
+    help: "Trains a MNIST model with CPU"
+    provider: bash
+    commands:
+      - pip install -r pipelines/requirements.txt
+      - python pipelines/train.py
+    artifacts:
+      - path: ./lightning_logs
+
+  - name: train-mnist-args
+    help: "Trains a MNIST model and allows to pass args"
+    provider: bash
+    commands:
+      - pip install -r pipelines/requirements.txt
+      - python pipelines/train.py ${{ run.args }}
+    artifacts:
+      - path: ./lightning_logs
+
+  - name: train-mnist-gpu
+    help: "Trains a MNIST model with GPU"
+    provider: bash
+    commands:
+      - pip install -r pipelines/requirements.txt
+      - python pipelines/train.py
+    artifacts:
+      - path: ./lightning_logs
+    resources:
+      gpu:
+        count: 1
+
+  - name: train-mnist-v100-i
+    help: "Trains a MNIST model with 8 NVIDIA Tesla V100 GPUs using spot instances"
+    provider: bash
+    commands:
+      - pip install -r pipelines/requirements.txt
+      - python pipelines/train.py
+    artifacts:
+      - path: ./lightning_logs
+    resources:
+      gpu:
+        name: V100
+      interruptible: true
+
+  - name: train-mnist-cached
+    help: "Trains a MNIST model and caches data and pip packages"
+    provider: bash
+    commands:
+      - pip install -r pipelines/requirements.txt
+      - python pipelines/train.py
+    cache:
+      - path: ./data
+      - path: ~/.cache/pip
+    artifacts:
+      - path: ./lightning_logs
+
+  - name: train-mnist-docker
+    help: "Trains a MNIST model using a Docker image"
+    provider: docker
+    image: python:3.11
+    commands:
+      - pip install -r pipelines/requirements.txt
+      - python pipelines/train.py
+    artifacts:
+      - path: ./lightning_logs
