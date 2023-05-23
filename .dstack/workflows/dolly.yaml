@@ -1,7 +1,8 @@
 workflows:
   - name: gradio-dolly-a100-i
     provider: bash
-    ports: 1
+    ports:
+      - 3000
     commands:
       - pip install -r dolly/requirements.txt
       - python dolly/chat.py
@@ -16,7 +17,8 @@ workflows:
 
   - name: code-dolly-a100-i
     provider: code
-    ports: 1
+    ports:
+      - 3000
     setup:
       - pip install -r dolly/requirements.txt
     cache:
