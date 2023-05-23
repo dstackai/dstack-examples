@@ -24,6 +24,7 @@ workflows:
     help: "Runs a FastAPI application using GPU and spot instances"
     provider: bash
     ports:
+      - 3000
     commands:
       - pip install -r apps/requirements.txt
       - uvicorn apps.main:app --port 3000 --host 0.0.0.0

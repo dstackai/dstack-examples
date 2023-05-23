@@ -2,10 +2,10 @@ workflows:
   - name: stable-diffusion-gpu-i
     provider: bash
     ports:
-      - 3000
+      - 7860
     commands:
-      - pip install -r tutorials/stable_diffusion/requirements.txt
-      - python tutorials/stable_diffusion/app.py
+      - pip install -r stable_diffusion/requirements.txt
+      - python stable_diffusion/app.py
     cache:
       - ~/.cache/pip
       - ./models
@@ -18,9 +18,9 @@ workflows:
   - name: code-stable-diffusion-gpu-i
     provider: code
     ports:
-      - 3000
+      - 7860
     setup:
-      - pip install -r tutorials/stable_diffusion/requirements.txt
+      - pip install -r stable_diffusion/requirements.txt
     cache:
       - ~/.cache/pip
       - ./models

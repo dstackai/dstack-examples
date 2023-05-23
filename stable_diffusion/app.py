@@ -42,4 +42,4 @@ with gr.Blocks(theme=theme) as demo:
     btn.click(infer, inputs=text, outputs=[gallery])
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=3000)
+    demo.launch(server_name="0.0.0.0")
