@@ -1,0 +1,6 @@
+type: task
+setup:
+  - pip install -r requirements.txt
+ports: [ 7860 ]
+commands:
+  - gradio app.py --reload

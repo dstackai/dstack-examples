@@ -1,0 +1,7 @@
+type: task
+setup:
+  - pip install -r requirements.txt
+ports: [ 6006 ]
+commands:
+  - tensorboard --logdir ./lightning_logs &
+  - python train.py

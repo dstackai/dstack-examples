@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 import gradio as gr
+import torch
 from diffusers import StableDiffusionPipeline
 from huggingface_hub import snapshot_download
 
@@ -11,17 +12,11 @@ local_dir = f"./models/{model_name}"
 if not Path(local_dir).exists() or len(os.listdir(local_dir)) == 0:
     snapshot_download(model_name, local_dir=local_dir, local_dir_use_symlinks=False)
 
-pipe = StableDiffusionPipeline.from_pretrained(f"./models/{model_name}", device_map="auto", local_files_only=True)
+pipe = StableDiffusionPipeline.from_pretrained(f"./models/{model_name}", local_files_only=True)
+if torch.cuda.is_available():
+    pipe = pipe.to("cuda")
 
-theme = gr.themes.Monochrome(
-    primary_hue="indigo",
-    secondary_hue="blue",
-    neutral_hue="slate",
-    radius_size=gr.themes.sizes.radius_sm,
-    font=[gr.themes.GoogleFont("Open Sans"), "ui-sans-serif", "system-ui", "sans-serif"],
-)
-
-with gr.Blocks(theme=theme) as demo:
+with gr.Blocks() as demo:
     def infer(prompt):
         return pipe([prompt]).images
 
@@ -30,7 +25,7 @@ with gr.Blocks(theme=theme) as demo:
         text = gr.Textbox(
             show_label=False,
             max_lines=1,
-            placeholder="Enter your prompt",
+            placeholder="Enter your prompt!",
         ).style(container=False)
         btn = gr.Button("Generate image").style(full_width=False)
 
@@ -42,4 +37,4 @@ with gr.Blocks(theme=theme) as demo:
     btn.click(infer, inputs=text, outputs=[gallery])
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0")
+    demo.launch()

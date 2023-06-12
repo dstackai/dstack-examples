@@ -1,0 +1,6 @@
+type: task
+setup:
+  - pip install -r requirements.txt
+ports: [8000]
+commands:
+  - uvicorn main:app --reload
