@@ -1,5 +1,5 @@
 type: task
-setup:
+build:
   - pip install -r requirements.txt
 ports: [7860]
 commands:
