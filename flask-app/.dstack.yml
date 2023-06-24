@@ -1,4 +1,5 @@
 type: task
+ports: [8100]
 commands:
   - pip install -r requirements.txt
   - python app.py
