@@ -1,3 +1,4 @@
+
 # Examples
 
 Welcome to `dstack-examples`. This repository contains a collection of examples
@@ -37,6 +38,7 @@ dstack init
 |--------------------------------------------|---------------------------------------------|:----|-------------------------------------------------------------------------------------------------------------------------------------------|
 | **Run a dev environment**                  | `dstack run . --build`                              |     |                                                                                                                                           |
 | **Run a FastAPI app**                      | `dstack run fastapi-app --reload`          |     |                                                                                                                                           |
+| **Run a Flask app**						 | `dstack run flask-app`                                 |     |
 | **Train a MNIST model**                    | `dstack run mnist-train`                   |     |                                                                                                                                           |
 | **Train a MNIST model (with Tensorboard)** | `dstack run mnist-train-tensorboard`       |     |                                                                                                                                           |
 | **Run a Stable Diffusion Gradio app**      | `dstack run stable-diffusion-app --build --reload` |     | ❗️Requires at least one GPU and minimum `16GB` of RAM. Make sure to configure a project and a profile.                                    |
