@@ -1,0 +1,4 @@
+type: task
+commands:
+  - pip install -r requirements.txt
+  - python app.py
