@@ -1,4 +1,2 @@
 type: dev-environment
-build:
- - pip install -r requirements.txt
 ide: vscode

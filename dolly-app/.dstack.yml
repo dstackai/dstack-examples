@@ -4,5 +4,3 @@ build:
 ports: [7860]
 commands:
   - gradio app.py --reload
-cache:
-  - ./models
