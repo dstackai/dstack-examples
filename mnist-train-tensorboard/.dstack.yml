@@ -1,7 +1,6 @@
 type: task
-init:
-  - pip install -r requirements.txt
 ports: [ 6006 ]
 commands:
+  - pip install -r requirements.txt
   - tensorboard --logdir ./lightning_logs &
   - python train.py
