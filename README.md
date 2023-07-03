@@ -41,5 +41,6 @@ resources.
 | **Run FastAPI demo**                     | `dstack run fastapi-app --reload`                  |
 | **Train MNIST model**                    | `dstack run mnist-train`                           |
 | **Train MNIST model (with Tensorboard)** | `dstack run mnist-train-tensorboard`               |
-| **Run Stable Diffusion demo**            | `dstack run stable-diffusion-app --build --reload` |
-| **Run Dolly Chatbot**                    | `dstack run dolly-chatbot --build --reload`        |
+| **Run Stable Diffusion demo**            | `dstack run stable-diffusion-app --reload` |
+| **Run Dolly Chatbot**                    | `dstack run dolly-chatbot --reload`        |
+| **Run XGen Chatbot**                     | `dstack run xgen-chatbot --reload`         |

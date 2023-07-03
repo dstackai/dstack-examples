@@ -1,6 +1,8 @@
 type: task
-build:
-  - pip install -r requirements.txt --no-cache-dir
-ports: [7860]
+
+ports:
+  - 7860
+
 commands:
+  - pip install -r requirements.txt -q
   - gradio app.py --reload
