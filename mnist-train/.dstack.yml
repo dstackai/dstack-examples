@@ -1,5 +1,0 @@
-type: task
-
-commands:
-  - pip install -r requirements.txt -q
-  - python train.py

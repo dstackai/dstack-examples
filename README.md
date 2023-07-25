@@ -6,7 +6,7 @@ demonstrating how to use `dstack`.
 ## 1. Setup
 
 ```shell
-pip install dstack
+pip install "dstack[aws,gcp,azure,lambda]" -U
 dstack start
 ```
 
@@ -35,12 +35,9 @@ resources.
 
 ## 5. Run examples
 
-| Example                                  | How to run                                         |
-|------------------------------------------|----------------------------------------------------|
-| **Run dev environment**                  | `dstack run .`                                     |
-| **Run FastAPI demo**                     | `dstack run fastapi-app --reload`                  |
-| **Train MNIST model**                    | `dstack run mnist-train`                           |
-| **Train MNIST model (with Tensorboard)** | `dstack run mnist-train-tensorboard`               |
-| **Run Stable Diffusion demo**            | `dstack run stable-diffusion-app --reload` |
-| **Run Dolly Chatbot**                    | `dstack run dolly-chatbot --reload`        |
-| **Run XGen Chatbot**                     | `dstack run xgen-chatbot --reload`         |
+| Example                            | How to run                                               |
+| ---------------------------------- | -------------------------------------------------------- |
+| **Default dev environment**        | `dstack run .`                                           |
+| **Serving with vLLM**              | `dstack run . -f vllm/serve.dstack.yml --port 8000:8000` |
+| **Serving with TGI**               | `dstack run . -f tgi/serve.dstack.yml --port 8000:8000`  |
+| **Custom dev environment for TGI** | `dstack run . -f tgi/.dstack.yml --build`                |

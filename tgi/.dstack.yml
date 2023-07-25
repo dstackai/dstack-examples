@@ -1,0 +1,10 @@
+type: dev-environment
+
+image: ghcr.io/huggingface/text-generation-inference:0.9.3
+
+init:
+  - apt-get update
+  - DEBIAN_FRONTEND=noninteractive apt-get install -y openssh-server
+  - rm -rf /var/lib/apt/lists/*
+
+ide: vscode

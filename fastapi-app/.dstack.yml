@@ -1,8 +1,0 @@
-type: task
-
-ports:
-  - 8000
-
-commands:
-  - pip install -r requirements.txt -q
-  - uvicorn main:app --reload

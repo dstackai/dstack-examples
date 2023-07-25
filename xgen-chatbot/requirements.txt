@@ -1,6 +1,0 @@
-tiktoken
-transformers
-torch
-accelerate
-xformers
-gradio

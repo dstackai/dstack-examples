@@ -1,0 +1,13 @@
+type: task
+# This configuration launches a given LLM model as an API
+
+image: ghcr.io/huggingface/text-generation-inference:0.9.3
+
+env:
+  - MODEL_ID=tiiuae/falcon-7b
+
+ports:
+ - 8000
+
+commands: 
+  - text-generation-launcher --hostname 0.0.0.0 --port 8000 --trust-remote-code

@@ -1,7 +1,0 @@
-diffusers
-transformers
-scipy
-ftfy
-accelerate
-safetensors
-gradio

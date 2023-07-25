@@ -1,0 +1,19 @@
+type: task
+# This configuration launches a given LLM model as an OpenAI-compatible API
+
+env:
+  # (Required) Specify the name of the model
+  - MODEL=facebook/opt-125m
+  # (Optional) Specify your Hugging Face token
+  - HUGGING_FACE_HUB_TOKEN=
+
+ports:
+  - 8000
+
+# (Optional) vllm requires python >=3.8
+python: "3.11"
+
+commands:
+  - conda install cuda # Required since vLLM will rebuild the CUDA kernel
+  - pip install vllm # Takes 5-10 minutes
+  - python -m vllm.entrypoints.openai.api_server --model $MODEL --port 8000

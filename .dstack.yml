@@ -1,3 +1,4 @@
 type: dev-environment
+# This configuration launches a blank dev environment
 
 ide: vscode
