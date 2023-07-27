@@ -4,7 +4,10 @@ type: task
 image: ghcr.io/huggingface/text-generation-inference:0.9.3
 
 env:
+  # (Required) Specify the name of the model
   - MODEL_ID=tiiuae/falcon-7b
+  # (Optional) Specify your Hugging Face token
+  - HUGGING_FACE_HUB_TOKEN=
 
 ports:
  - 8000

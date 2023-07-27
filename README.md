@@ -35,9 +35,9 @@ resources.
 
 ## 5. Run examples
 
-| Example                            | How to run                                               |
-| ---------------------------------- | -------------------------------------------------------- |
-| **Default dev environment**        | `dstack run .`                                           |
-| **Serving with vLLM**              | `dstack run . -f vllm/serve.dstack.yml --port 8000:8000` |
-| **Serving with TGI**               | `dstack run . -f tgi/serve.dstack.yml --port 8000:8000`  |
-| **Custom dev environment for TGI** | `dstack run . -f tgi/.dstack.yml --build`                |
+| Example                            | How to run                                                                    |
+| ---------------------------------- | ----------------------------------------------------------------------------- |
+| **Default dev environment**        | `dstack run .`                                                                |
+| **Serving with vLLM**              | `dstack run . -f vllm/serve.dstack.yml --port 8000:8000`                      |
+| **Serving with TGI**               | `dstack run . -f text-generation-inference/serve.dstack.yml --port 8000:8000` |
+| **Custom dev environment for TGI** | `dstack run . -f text-generation-inference/.dstack.yml --build`               |
