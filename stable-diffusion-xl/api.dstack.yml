@@ -1,0 +1,9 @@
+type: task
+# This configuration launches a Stable Diffusion XL as an API
+
+ports:
+ - 8000
+
+commands: 
+  - pip install -r stable-diffusion-xl/requirements.txt
+  - uvicorn stable-diffusion-xl.main:app --port 8000

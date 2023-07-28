@@ -1,0 +1,8 @@
+transformers
+accelerate
+safetensors
+diffusers
+invisible-watermark>=0.2.0
+opencv-python-headless
+fastapi
+uvicorn

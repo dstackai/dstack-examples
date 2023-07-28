@@ -41,3 +41,4 @@ resources.
 | **Serving with vLLM**              | `dstack run . -f vllm/serve.dstack.yml --port 8000:8000`                      |
 | **Serving with TGI**               | `dstack run . -f text-generation-inference/serve.dstack.yml --port 8000:8000` |
 | **Custom dev environment for TGI** | `dstack run . -f text-generation-inference/.dstack.yml --build`               |
+| **Stable Diffussion XL as API**    | `dstack run . -f stable-diffusion-xl/api.dstack.yml --port 8000:8000`         |
