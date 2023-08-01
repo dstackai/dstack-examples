@@ -83,7 +83,7 @@ async def refine(request: RefineRequest):
 
 
 @app.get("/download/{id}")
-def download(id: str):
+async def download(id: str):
     filename = f"{id}.png"
     return FileResponse(
         images_dir / filename, media_type="image/png", filename=filename
