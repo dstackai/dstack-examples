@@ -35,10 +35,11 @@ resources.
 
 ## 5. Run examples
 
-| Example                            | How to run                                                                    |
-| ---------------------------------- | ----------------------------------------------------------------------------- |
-| **Default dev environment**        | `dstack run .`                                                                |
-| **Serving with vLLM**              | `dstack run . -f vllm/serve.dstack.yml --port 8000:8000`                      |
-| **Serving with TGI**               | `dstack run . -f text-generation-inference/serve.dstack.yml --port 8000:8000` |
-| **Custom dev environment for TGI** | `dstack run . -f text-generation-inference/.dstack.yml --build`               |
-| **Stable Diffussion XL as API**    | `dstack run . -f stable-diffusion-xl/api.dstack.yml --port 8000:8000`         |
+| Example                            | How to run                                                      |
+| ---------------------------------- | --------------------------------------------------------------- |
+| **Default dev environment**        | `dstack run .`                                                  |
+| **Serving with vLLM**              | `dstack run . -f vllm/serve.dstack.yml`                         |
+| **Serving with TGI**               | `dstack run . -f text-generation-inference/serve.dstack.yml`    |
+| **Custom dev environment for TGI** | `dstack run . -f text-generation-inference/.dstack.yml --build` |
+| **SDXL with FastAPI**              | `dstack run . -f stable-diffusion-xl/api.dstack.yml`            |
+| **Fine-tune Llama 2 using QLoRA**  | `dstack run . -f llama-2/train.dstack.yml`                      |
