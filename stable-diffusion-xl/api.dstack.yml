@@ -5,5 +5,7 @@ ports:
  - 8000
 
 commands: 
+  - apt-get update
+  - apt-get install libgl1 -y
   - pip install -r stable-diffusion-xl/requirements.txt
   - uvicorn stable-diffusion-xl.main:app --port 8000
