@@ -1,6 +1,5 @@
-# Source: https://gist.github.com/younesbelkada/9f7f75c94bdc1981c8ca5cc937d4a4da
+# Based on https://gist.github.com/younesbelkada/9f7f75c94bdc1981c8ca5cc937d4a4da
 
-import os
 from dataclasses import dataclass, field
 from typing import Optional, Union
 
@@ -173,52 +172,45 @@ def create_and_prepare_model(args):
     )
 
     model.config.use_cache = False
-    model.config.pretraining_tp = 1 # https://github.com/huggingface/transformers/pull/24906
+    # https://github.com/huggingface/transformers/pull/24906
+    model.config.pretraining_tp = 1
 
-    peft_config = LoraConfig(
-        lora_alpha=script_args.lora_alpha,
-        lora_dropout=script_args.lora_dropout,
-        r=script_args.lora_r,
-        bias="none",
-        task_type="CAUSAL_LM",
-    )
-
-    tokenizer = AutoTokenizer.from_pretrained(
-        script_args.model_name, trust_remote_code=True
-    )
+    tokenizer = AutoTokenizer.from_pretrained(args.model_name, trust_remote_code=True)
 
     tokenizer.pad_token = tokenizer.eos_token
-    tokenizer.padding_side = "right" # Fix weird overflow issue with fp16 training
+    # Fix weird overflow issue with fp16 training
+    tokenizer.padding_side = "right"
 
-    return model, peft_config, tokenizer
+    return model, tokenizer
 
 
-if __name__ == "__main__":
-    parser = HfArgumentParser(ScriptArguments)
-    script_args = parser.parse_args_into_dataclasses()[0]
-
-    dataset = load_dataset(script_args.dataset_name, split="train")
-
-    model, peft_config, tokenizer = create_and_prepare_model(script_args)
-
+def create_and_prepare_trainer(model, tokenizer, dataset, args):
     training_arguments = TrainingArguments(
-        output_dir=script_args.output_dir,
-        num_train_epochs=script_args.num_train_epochs,
-        per_device_train_batch_size=script_args.per_device_train_batch_size,
-        gradient_accumulation_steps=script_args.gradient_accumulation_steps,
-        optim=script_args.optim,
-        save_steps=script_args.save_steps,
-        logging_steps=script_args.logging_steps,
-        learning_rate=script_args.learning_rate,
-        weight_decay=script_args.weight_decay,
-        fp16=script_args.fp16,
-        bf16=script_args.bf16,
-        max_grad_norm=script_args.max_grad_norm,
-        max_steps=script_args.max_steps,
-        warmup_ratio=script_args.warmup_ratio,
-        group_by_length=script_args.group_by_length,
-        lr_scheduler_type=script_args.lr_scheduler_type,
-        report_to="tensorboard"
+        output_dir=args.output_dir,
+        num_train_epochs=args.num_train_epochs,
+        per_device_train_batch_size=args.per_device_train_batch_size,
+        gradient_accumulation_steps=args.gradient_accumulation_steps,
+        optim=args.optim,
+        save_steps=args.save_steps,
+        logging_steps=args.logging_steps,
+        learning_rate=args.learning_rate,
+        weight_decay=args.weight_decay,
+        fp16=args.fp16,
+        bf16=args.bf16,
+        max_grad_norm=args.max_grad_norm,
+        max_steps=args.max_steps,
+        warmup_ratio=args.warmup_ratio,
+        group_by_length=args.group_by_length,
+        lr_scheduler_type=args.lr_scheduler_type,
+        report_to="tensorboard",
+    )
+
+    peft_config = LoraConfig(
+        lora_alpha=args.lora_alpha,
+        lora_dropout=args.lora_dropout,
+        r=args.lora_r,
+        bias="none",
+        task_type="CAUSAL_LM",
     )
 
     trainer = SFTTrainer(
@@ -226,41 +218,53 @@ if __name__ == "__main__":
         train_dataset=dataset,
         peft_config=peft_config,
         dataset_text_field="text",
-        max_seq_length=script_args.max_seq_length,
+        max_seq_length=args.max_seq_length,
         tokenizer=tokenizer,
         args=training_arguments,
-        packing=script_args.packing,
+        packing=args.packing,
     )
 
+    return trainer
+
+
+def merge_and_push(args):
+    # Reload model in FP16 and merge it with LoRA weights
+    base_model = AutoModelForCausalLM.from_pretrained(
+        args.model_name,
+        low_cpu_mem_usage=True,
+        return_dict=True,
+        torch_dtype=torch.float16,
+        device_map="auto",
+    )
+    model = PeftModel.from_pretrained(base_model, args.new_model_name)
+    model = model.merge_and_unload()
+
+    # Reload the new tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(args.model_name, trust_remote_code=True)
+    tokenizer.pad_token = tokenizer.eos_token
+    tokenizer.padding_side = "right"
+
+    # Publish the new model to Hugging Face Hub
+    model.push_to_hub(args.new_model_name, use_temp_dir=False)
+    tokenizer.push_to_hub(args.new_model_name, use_temp_dir=False)
+
+
+if __name__ == "__main__":
+    parser = HfArgumentParser(ScriptArguments)
+    args = parser.parse_args_into_dataclasses()[0]
+
+    dataset = load_dataset(args.dataset_name, split="train")
+
+    model, tokenizer = create_and_prepare_model(args)
+
+    trainer = create_and_prepare_trainer(model, tokenizer, dataset, args)
+
     trainer.train()
+    trainer.model.save_pretrained(args.new_model_name)
 
-    trainer.model.save_pretrained(script_args.new_model_name)
-
-    if script_args.merge_and_push:
+    if args.merge_and_push:
         # Free memory for merging weights
         del model
-        torch.cuda.empty_cache()    
+        torch.cuda.empty_cache()
 
-
-
-        # Reload model in FP16 and merge it with LoRA weights
-        base_model = AutoModelForCausalLM.from_pretrained(
-            script_args.model_name,
-            low_cpu_mem_usage=True,
-            return_dict=True,
-            torch_dtype=torch.float16,
-            device_map="auto",
-        )
-        model = PeftModel.from_pretrained(base_model, script_args.new_model_name)
-        model = model.merge_and_unload()
-
-        # Reload the new tokenizer
-        tokenizer = AutoTokenizer.from_pretrained(
-            script_args.model_name, trust_remote_code=True
-        )
-        tokenizer.pad_token = tokenizer.eos_token
-        tokenizer.padding_side = "right"
-
-        # Publish the new model to Hugging Face Hub
-        model.push_to_hub(script_args.new_model_name, use_temp_dir=False)
-        tokenizer.push_to_hub(script_args.new_model_name, use_temp_dir=False)
+        merge_and_push(args)
