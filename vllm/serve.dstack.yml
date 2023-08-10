@@ -1,5 +1,8 @@
-type: task
-# This configuration launches a given LLM model as an OpenAI-compatible API
+type: service
+# This configuration deploys a given LLM model as an OpenAI-compatible API
+
+# (Required) Create a gateway using `dstack gateway create` and set its address with `dstack secrets add`.
+gateway: ${{ secrets.GATEWAY_ADDRESS }}
 
 env:
   # (Required) Specify the name of the model
@@ -7,8 +10,7 @@ env:
   # (Optional) Specify your Hugging Face token
   - HUGGING_FACE_HUB_TOKEN=
 
-ports:
-  - 8000
+port: 8000
 
 # (Optional) vllm requires python >=3.8
 python: "3.11"

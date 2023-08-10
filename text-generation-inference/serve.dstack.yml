@@ -1,16 +1,18 @@
-type: task
-# This configuration launches a given LLM model as an API
+type: service
+# This configuration deploys a given LLM model as an API
 
-image: ghcr.io/huggingface/text-generation-inference:0.9.3
+# (Required) Create a gateway using `dstack gateway create` and set its address with `dstack secrets add`.
+gateway: ${{ secrets.GATEWAY_ADDRESS }}
+
+image: ghcr.io/huggingface/text-generation-inference:1.0.0
 
 env:
   # (Required) Specify the name of the model
-  - MODEL_ID=tiiuae/falcon-7b
+  - MODEL_ID=NousResearch/Llama-2-7b-hf
   # (Optional) Specify your Hugging Face token
   - HUGGING_FACE_HUB_TOKEN=
 
-ports:
- - 8000
+port: 8000
 
 commands: 
   - text-generation-launcher --hostname 0.0.0.0 --port 8000 --trust-remote-code

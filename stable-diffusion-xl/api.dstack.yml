@@ -1,11 +1,16 @@
-type: task
-# This configuration launches a Stable Diffusion XL as an API
+type: service
+# This configuration deploys a Stable Diffusion XL as a public endpoint
 
-ports:
- - 8000
+# (Optional) If not specified, it will use your local version
+python: "3.11"
+
+# (Required) Create a gateway using `dstack gateway create` and set its address with `dstack secrets add`.
+gateway: ${{ secrets.GATEWAY_ADDRESS }}
+
+port: 8000
 
 commands: 
   - apt-get update
-  - apt-get install libgl1 -y
+  - apt-get install libgl1 -y # Required by `invisible-watermark``
   - pip install -r stable-diffusion-xl/requirements.txt
   - uvicorn stable-diffusion-xl.main:app --port 8000

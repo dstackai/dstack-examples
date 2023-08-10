@@ -15,7 +15,7 @@ and apps locally.
 
 ## 2. Projects
 
-To run examples in the cloud (AWS, GCP, Azure),
+To run examples in the cloud (AWS, GCP, Azure, Lambda Cloud),
 make sure to create the corresponding [project](https://dstack.ai/docs/guides/projects/)
 via the UI.
 
@@ -38,8 +38,8 @@ resources.
 | Example                            | How to run                                                      |
 | ---------------------------------- | --------------------------------------------------------------- |
 | **Default dev environment**        | `dstack run .`                                                  |
-| **Serving with vLLM**              | `dstack run . -f vllm/serve.dstack.yml`                         |
-| **Serving with TGI**               | `dstack run . -f text-generation-inference/serve.dstack.yml`    |
+| **Serving LLMs with vLLM**         | `dstack run . -f vllm/serve.dstack.yml`                         |
+| **Serving LLMs with TGI**          | `dstack run . -f text-generation-inference/serve.dstack.yml`    |
 | **Custom dev environment for TGI** | `dstack run . -f text-generation-inference/.dstack.yml --build` |
-| **SDXL with FastAPI**              | `dstack run . -f stable-diffusion-xl/api.dstack.yml`            |
+| **Serving SDXL with FastAPI**      | `dstack run . -f stable-diffusion-xl/api.dstack.yml`            |
 | **Fine-tune Llama 2 using QLoRA**  | `dstack run . -f llama-2/train.dstack.yml`                      |
