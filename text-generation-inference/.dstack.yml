@@ -1,7 +1,7 @@
 type: dev-environment
 # This configuration launches a custom dev environment for TGI
 
-image: ghcr.io/huggingface/text-generation-inference:0.9.3
+image: ghcr.io/huggingface/text-generation-inference:latest
 
 build:
   - apt-get update

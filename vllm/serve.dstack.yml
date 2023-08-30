@@ -1,14 +1,9 @@
 type: service
 # This configuration deploys a given LLM model as an OpenAI-compatible API
 
-# (Required) Create a gateway using `dstack gateway create` and set its address with `dstack secrets add`.
-gateway: ${{ secrets.GATEWAY_ADDRESS }}
-
 env:
   # (Required) Specify the name of the model
-  - MODEL=facebook/opt-125m
-  # (Optional) Specify your Hugging Face token
-  - HUGGING_FACE_HUB_TOKEN=
+  - MODEL=tiiuae/falcon-7b
 
 port: 8000
 
@@ -17,4 +12,4 @@ python: "3.11"
 
 commands:
   - pip install vllm
-  - python -m vllm.entrypoints.openai.api_server --model $MODEL --port 8000
+  - python -m vllm.entrypoints.openai.api_server --model $MODEL --port 8000 --trust-remote-code
