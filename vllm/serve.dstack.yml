@@ -3,7 +3,7 @@ type: service
 
 env:
   # (Required) Specify the name of the model
-  - MODEL=TheBloke/Llama-2-7B-fp16
+  - MODEL=NousResearch/Llama-2-7b-hf
 
 port: 8000
 
