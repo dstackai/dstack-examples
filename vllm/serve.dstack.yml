@@ -3,7 +3,7 @@ type: service
 
 env:
   # (Required) Specify the name of the model
-  - MODEL=tiiuae/falcon-7b
+  - MODEL=TheBloke/Llama-2-7B-fp16
 
 port: 8000
 
