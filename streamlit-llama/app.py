@@ -154,7 +154,7 @@ if not st.session_state.started:
 else:
     st.info("The LLM is up!", icon="🙌")
     st.markdown(
-        "Fee to access the LLM at at [`http://127.0.0.1:8080`](http://127.0.0.1:8080/docs)"
+        "Feel to access the LLM at at [`http://127.0.0.1:8080`](http://127.0.0.1:8080/docs)"
     )
     st.code(
         """curl 127.0.0.1:8080 \\
