@@ -28,7 +28,7 @@ client = weaviate.Client(
     auth_client_secret=auth_config,
 )
 
-client.schema.delete_all()
+client.schema.delete_class("llama-index-weaviate")
 
 embed_model = LangchainEmbedding(HuggingFaceEmbeddings())
 
