@@ -1,0 +1,4 @@
+weaviate-client
+llama-index
+sentence-transformers
+text_generation
