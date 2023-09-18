@@ -5,12 +5,19 @@ import dstack
 
 run_name = "streamlit-llama"
 
+model_ids = [
+    "TheBloke/Llama-2-13B-chat-GPTQ",
+    "TheBloke/Llama-2-70B-chat-GPTQ",
+    "TheBloke/Phind-CodeLlama-34B-v2-GPTQ",
+]
+
 if len(st.session_state) == 0:
     st.session_state.deploying = False
-    st.session_state.started = False
+    st.session_state.deployed = False
     st.session_state.client = dstack.Client.from_config(".")
     st.session_state.run = None
     st.session_state.error = None
+    st.session_state.model_id = None
     try:
         with st.spinner("Connecting to `dstack`..."):
             run = st.session_state.client.runs.get(run_name)
@@ -37,28 +44,11 @@ def trigger_llm_deployment():
 def trigget_llm_undeployment():
     st.session_state.run.stop()
     st.session_state.deploying = False
-    st.session_state.started = False
+    st.session_state.deployed = False
     st.session_state.run = None
 
 
-with st.sidebar:
-    model_option = st.selectbox(
-        "Choose an LLM to deploy",
-        (
-            "Llama-2-13B-chat-GPTQ (GPU 20GB)",
-            "Llama-2-70B-chat-GPTQ (GPU 40GB)",
-        ),
-        disabled=st.session_state.deploying or st.session_state.started,
-    )
-    if model_option == "Llama-2-13B-chat-GPTQ (GPU 20GB)":
-        model_id = "TheBloke/Llama-2-13B-chat-GPTQ"
-    elif model_option == "Llama-2-70B-chat-GPTQ (GPU 40GB)":
-        model_id = "TheBloke/Llama-2-70B-chat-GPTQ"
-    if not st.session_state.deploying:
-        st.button("Deploy", on_click=trigger_llm_deployment, type="primary")
-
-
-def get_configuration():
+def get_configuration(model_id: str):
     return dstack.Task(
         image="ghcr.io/huggingface/text-generation-inference:latest",
         env={"MODEL_ID": model_id},
@@ -69,17 +59,45 @@ def get_configuration():
     )
 
 
-def get_resources():
+def get_gpu_memory(model_id: str):
     if model_id == "TheBloke/Llama-2-13B-chat-GPTQ":
-        gpu_memory = "20GB"
+        return "20GB"
     elif model_id == "TheBloke/Llama-2-70B-chat-GPTQ":
-        gpu_memory = "40GB"
-    return dstack.Resources(gpu=dstack.GPU(memory=gpu_memory))
+        return "40GB"
+    elif model_id == "TheBloke/Phind-CodeLlama-34B-v2-GPTQ":
+        return "40GB"
+
+
+with st.sidebar:
+    st.header("Deploy an LLM")
+    model_index = (
+        model_ids.index(st.session_state.model_id) if st.session_state.model_id else 0
+    )
+    model_id = st.selectbox(
+        "Choose an LLM",
+        model_ids,
+        index=model_index,
+        disabled=st.session_state.deploying or st.session_state.deployed,
+    )
+    backend_options = ["No preference"]
+    for backend in st.session_state.client.backends.list():
+        backend_options.append(backend.name)
+    st.text_input("vRAM", get_gpu_memory(model_id), disabled=True)
+    backend_option = st.selectbox(
+        "Choose a backend",
+        backend_options,
+        disabled=st.session_state.deploying or st.session_state.deployed,
+        index=backend_options.index(st.session_state.run.backend)
+        if st.session_state.run
+        else 0,
+    )
+    if not st.session_state.deploying and not st.session_state.deployed:
+        st.button("Deploy", on_click=trigger_llm_deployment, type="primary")
 
 
 if st.session_state.error:
     with st.sidebar:
-        st.error(st.session_state)
+        st.error(st.session_state.error)
 
 
 if st.session_state.deploying:
@@ -94,9 +112,14 @@ if st.session_state.deploying:
                 st.write("Provisioning...")
                 try:
                     run = st.session_state.client.runs.submit(
-                        configuration=get_configuration(),
+                        configuration=get_configuration(model_id),
                         run_name=run_name,
-                        resources=get_resources(),
+                        resources=dstack.Resources(
+                            gpu=dstack.GPU(memory=get_gpu_memory(model_id))
+                        ),
+                        backends=None
+                        if backend_option == "No preference"
+                        else [backend_option],
                     )
                     st.session_state.run = run
                     st.write("Attaching to the LLM...")
@@ -122,26 +145,22 @@ if st.session_state.deploying:
                 while True:
                     time.sleep(0.5)
                     try:
-                        r = requests.get("http://localhost:8080/health")
+                        r = requests.get("http://localhost:8080/info")
                         if r.status_code == 200:
+                            st.session_state.model_id = r.json()["model_id"]
+                            st.session_state.deployed = True
                             break
                         elif st.session_state.run.status().is_finished():
                             st.session_state.error = "Failed or interrupted"
-                            st.session_state.deploying = False
-                            st.experimental_rerun()
                             break
-                    except Exception:
+                    except Exception as e:
                         pass
-                if not st.session_state.error:
-                    status.update(
-                        label="The LLM is ready!", state="complete", expanded=False
-                    )
-                    st.session_state.deploying = False
-                    st.session_state.started = True
-                    placeholder.empty()
+            st.session_state.deploying = False
+            st.experimental_rerun()
+
 
 with st.sidebar:
-    if st.session_state.started:
+    if st.session_state.deployed:
         st.button(
             "Undeploy",
             type="primary",
@@ -149,21 +168,26 @@ with st.sidebar:
             on_click=trigget_llm_undeployment,
         )
 
-if not st.session_state.started:
+if not st.session_state.deployed:
     st.info("The LLM is down.", icon="😴")
 else:
     st.info("The LLM is up!", icon="🙌")
     st.markdown(
-        "Feel to access the LLM at at [`http://127.0.0.1:8080`](http://127.0.0.1:8080/docs)"
+        "Fee to access the LLM at at [`http://127.0.0.1:8080`](http://127.0.0.1:8080/docs)"
     )
     st.code(
         """curl 127.0.0.1:8080 \\
     -X POST \\
-    -d '{"inputs":"What is Deep Learning?","parameters":{"max_new_tokens":20}}' \\
+    -d '{"inputs":"<prompt>","parameters":{"max_new_tokens":20}}' \\
     -H 'Content-Type: application/json'
             """,
         language="shell",
     )
-    st.markdown(
-        "Make sure to use the Llama 2 Chat prompt [format](https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGML/discussions/3)."
-    )
+    if model_id.startswith("TheBloke/Llama-2"):
+        st.markdown(
+            "Make sure to use the Llama 2 Chat prompt [format](https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGML/discussions/3)."
+        )
+    elif model_id.startswith("TheBloke/Phind-CodeLlama"):
+        st.markdown(
+            "Make sure to use the Phind prompt [format](https://huggingface.co/TheBloke/Phind-CodeLlama-34B-v2-GPTQ#prompt-template-phind)."
+        )

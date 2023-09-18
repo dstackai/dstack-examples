@@ -1,2 +1,2 @@
 streamlit
-dstack[all]==0.11.2rc2
+dstack[all]==0.11.2
