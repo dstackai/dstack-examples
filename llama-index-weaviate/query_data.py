@@ -6,6 +6,7 @@ from llama_index import (
     LangchainEmbedding,
     PromptHelper,
     QuestionAnswerPrompt,
+    RefinePrompt,
     ServiceContext,
     VectorStoreIndex,
 )
@@ -58,7 +59,7 @@ if __name__ == "__main__":
         vector_store, service_context=service_context
     )
 
-    prompt = QuestionAnswerPrompt(
+    text_qa_template = QuestionAnswerPrompt(
         """<s>[INST] <<SYS>>
 We have provided context information below. 
 
@@ -69,11 +70,33 @@ Given this information, please answer the question.
 
 {query_str} [/INST]"""
     )
+
+    refine_template = RefinePrompt(
+        """<s>[INST] <<SYS>>
+The original query is as follows: 
+
+{query_str}
+
+We have provided an existing answer:
+
+{existing_answer}
+
+We have the opportunity to refine the existing answer (only if needed) with some more context below.
+
+{context_msg}
+<</SYS>>
+
+Given the new context, refine the original answer to better answer the query. If the context isn't useful, return the original answer. [/INST]"""
+    )
+
     query_engine = index.as_query_engine(
-        text_qa_template=prompt,
+        text_qa_template=text_qa_template,
+        refine_template=refine_template,
         streaming=True,
     )
 
-    response = query_engine.query("What did the author do growing up?")
+    response = query_engine.query(
+        "Make a bullet-point timeline of the authors biography."
+    )
     response.print_response_stream()
     print(f"\n\nSources:\n\n{response.get_formatted_sources()}")
