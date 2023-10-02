@@ -6,7 +6,7 @@ demonstrating how to use `dstack`.
 ## 1. Setup
 
 ```shell
-pip install "dstack[aws,gcp,azure,lambda]" -U
+pip install "dstack[all]" -U
 dstack start
 ```
 
@@ -27,19 +27,14 @@ cd dstack-examples
 dstack init
 ```
 
-## 4. Profiles
+## 4. Run examples
 
-Every example may have different GPU and memory requirements.
-Before running examples, make sure to configure a [profile](https://dstack.ai/docs/#defining-profiles) with required
-resources.
-
-## 5. Run examples
-
-| Example                            | How to run                                                      |
-| ---------------------------------- | --------------------------------------------------------------- |
-| **Default dev environment**        | `dstack run .`                                                  |
-| **Serving LLMs with vLLM**         | `dstack run . -f vllm/serve.dstack.yml`                         |
-| **Serving LLMs with TGI**          | `dstack run . -f text-generation-inference/serve.dstack.yml`    |
-| **Custom dev environment for TGI** | `dstack run . -f text-generation-inference/.dstack.yml --build` |
-| **Serving SDXL with FastAPI**      | `dstack run . -f stable-diffusion-xl/api.dstack.yml`            |
-| **Fine-tune Llama 2 using QLoRA**  | `dstack run . -f llama-2/train.dstack.yml`                      |
+| Example                             | How to run                                                                  |
+| ----------------------------------- | --------------------------------------------------------------------------- |
+| **Default dev environment**         | `dstack run . --gpu 16GB`                                                   |
+| **Deploying LLMs using vLLM**       | `dstack run . -f vllm/serve.dstack.yml --gpu 24GB`                          |
+| **Deploying LLMs using TGI**        | `dstack run . -f text-generation-inference/serve.dstack.yml --gpu 24GB`     |
+| **Custom dev environment for TGI**  | `dstack run . -f text-generation-inference/.dstack.yml --build  --gpu 24GB` |
+| **Deploying SDXL using FastAPI**    | `dstack run . -f stable-diffusion-xl/api.dstack.yml --gpu 16GB`             |
+| **Fine-tuning Llama 2 using QLoRA** | `dstack run . -f llama-2/train.dstack.yml  --gpu 16GB`                      |
+| **Deploying LLMs using Python API** | `streamlit run deploy-python/app.py`                                        |
