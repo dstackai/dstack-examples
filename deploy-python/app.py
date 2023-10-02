@@ -3,7 +3,7 @@ import requests
 import streamlit as st
 import dstack
 
-run_name = "streamlit-llama"
+run_name = "deploy-python"
 
 model_ids = [
     "TheBloke/Llama-2-13B-chat-GPTQ",
