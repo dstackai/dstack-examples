@@ -4,7 +4,8 @@ type: task
 # (Optional) When not specified, your local Python version is used
 python: "3.11"
 
-env: 
+env:
+  - HF_HUB_ENABLE_HF_TRANSFER=1
   # (Required) Specify your Hugging Face token to publish the fine-tuned model
   - HUGGING_FACE_HUB_TOKEN=
 

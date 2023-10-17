@@ -1,11 +1,5 @@
 type: dev-environment
-# This configuration launches a custom dev environment for TGI
 
 image: ghcr.io/huggingface/text-generation-inference:latest
-
-build:
-  - apt-get update
-  - DEBIAN_FRONTEND=noninteractive apt-get install -y openssh-server
-  - rm -rf /var/lib/apt/lists/*
 
 ide: vscode
