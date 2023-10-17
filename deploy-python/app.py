@@ -1,7 +1,7 @@
 import time
 import requests
 import streamlit as st
-import dstack
+from dstack.api import Client, GPU, ClientError, Resources, Task, PortUsedError
 
 run_name = "deploy-python"
 
@@ -14,17 +14,17 @@ model_ids = [
 if len(st.session_state) == 0:
     st.session_state.deploying = False
     st.session_state.deployed = False
-    st.session_state.client = dstack.Client.from_config(".")
+    st.session_state.client = Client.from_config()
     st.session_state.run = None
     st.session_state.error = None
     st.session_state.model_id = None
     try:
         with st.spinner("Connecting to `dstack`..."):
             run = st.session_state.client.runs.get(run_name)
-            if run and run.status().is_unfinished():
+            if run and not run.status.is_finished():
                 st.session_state.run = run
                 st.session_state.deploying = True
-    except dstack.api.hub.errors.HubClientError:
+    except ClientError:
         st.info("Can't connect to `dstack`", icon="💤")
         st.text("Make sure the `dstack` server is up:")
         st.code(
@@ -49,7 +49,7 @@ def trigget_llm_undeployment():
 
 
 def get_configuration(model_id: str):
-    return dstack.Task(
+    return Task(
         image="ghcr.io/huggingface/text-generation-inference:latest",
         env={"MODEL_ID": model_id},
         commands=[
@@ -114,9 +114,7 @@ if st.session_state.deploying:
                     run = st.session_state.client.runs.submit(
                         configuration=get_configuration(model_id),
                         run_name=run_name,
-                        resources=dstack.Resources(
-                            gpu=dstack.GPU(memory=get_gpu_memory(model_id))
-                        ),
+                        resources=Resources(gpu=GPU(memory=get_gpu_memory(model_id))),
                         backends=None
                         if backend_option == "No preference"
                         else [backend_option],
@@ -140,7 +138,7 @@ if st.session_state.deploying:
                 )
                 try:
                     st.session_state.run.attach()
-                except dstack.PortUsedError:
+                except PortUsedError:
                     pass
                 while True:
                     time.sleep(0.5)
@@ -150,9 +148,11 @@ if st.session_state.deploying:
                             st.session_state.model_id = r.json()["model_id"]
                             st.session_state.deployed = True
                             break
-                        elif st.session_state.run.status().is_finished():
-                            st.session_state.error = "Failed or interrupted"
-                            break
+                        else:
+                            st.session_state.run.refresh()
+                            if st.session_state.run.status.is_finished():
+                                st.session_state.error = "Failed or interrupted"
+                                break
                     except Exception as e:
                         pass
             st.session_state.deploying = False
