@@ -1,0 +1,7 @@
+type: service
+image: ghcr.io/huggingface/text-embeddings-inference:latest
+env:
+  - MODEL_ID=thenlper/gte-base
+port: 8000
+commands: 
+  - text-embeddings-router --hostname 0.0.0.0 --port 8000

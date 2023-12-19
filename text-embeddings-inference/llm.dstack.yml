@@ -1,0 +1,7 @@
+type: service
+image: ghcr.io/huggingface/text-generation-inference:latest
+env:
+  - MODEL_ID=mistralai/Mistral-7B-Instruct-v0.1
+port: 8000
+commands: 
+  - text-generation-launcher --hostname 0.0.0.0 --port 8000 --trust-remote-code
