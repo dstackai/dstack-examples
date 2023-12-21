@@ -1,0 +1,14 @@
+type: service
+
+python: "3.11"
+
+commands:
+  - conda install cuda # (required by megablocks)
+  - pip install torch # (required by megablocks)
+  - pip install vllm megablocks
+  - python -m vllm.entrypoints.openai.api_server
+    --model mistralai/Mixtral-8X7B-Instruct-v0.1
+    --host 0.0.0.0
+    --tensor-parallel-size 2 # adapt to your GPUs
+
+port: 8000
