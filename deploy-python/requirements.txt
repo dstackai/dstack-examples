@@ -1,2 +1,0 @@
-streamlit
-dstack[all]>=0.12.0

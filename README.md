@@ -5,21 +5,25 @@ demonstrating how to use `dstack`.
 
 ## 1. Setup
 
+### 1.1. Install dstack
+
 ```shell
 pip install "dstack[all]" -U
-dstack start
 ```
 
-The `dstack start` command starts the Hub server, creating the default project that runs dev environments, pipelines,
-and apps locally.
+### 1.2 Configure clouds
 
-## 2. Projects
+Configure cloud credentials in `~/.dstack/server/config.yml`. [Learn more](https://dstack.ai/docs/config/server/).
 
-To run examples in the cloud (AWS, GCP, Azure, Lambda Cloud),
-make sure to create the corresponding [project](https://dstack.ai/docs/guides/projects/)
-via the UI.
+### 1.3. Start the server
 
-## 3. Clone the repo
+```shell
+dstack server
+```
+
+## 2. Run examples
+
+### 2.1. Init the repo
 
 ```shell
 git clone https://github.com/dstackai/dstack-examples
@@ -27,14 +31,23 @@ cd dstack-examples
 dstack init
 ```
 
-## 4. Run examples
+### 2.2. Run a dev environment
 
-| Example                             | How to run                                                                  |
-| ----------------------------------- | --------------------------------------------------------------------------- |
-| **Default dev environment**         | `dstack run . --gpu 16GB`                                                   |
-| **Deploying LLMs using vLLM**       | `dstack run . -f vllm/serve.dstack.yml --gpu 24GB`                          |
-| **Deploying LLMs using TGI**        | `dstack run . -f text-generation-inference/serve.dstack.yml --gpu 24GB`     |
-| **Custom dev environment for TGI**  | `dstack run . -f text-generation-inference/.dstack.yml --build  --gpu 24GB` |
-| **Deploying SDXL using FastAPI**    | `dstack run . -f stable-diffusion-xl/api.dstack.yml --gpu 16GB`             |
-| **Fine-tuning Llama 2 using QLoRA** | `dstack run . -f llama-2/train.dstack.yml  --gpu 16GB`                      |
-| **Deploying LLMs using Python API** | `streamlit run deploy-python/app.py`                                        |
+Here's how to run a dev environment with the current repo:
+
+```shell
+dstack run . --gpu 24GB
+```
+
+### 2.3. Run any example
+
+Here's how any example can be run:
+
+```shell
+dstack run . -f deployment/vllm/serve.dstack.yml --gpu 24GB
+```
+
+### More information
+
+- [Docs](https://dstack.ai/docs)
+- [See all learning materials](https://dstack.ai/learn)

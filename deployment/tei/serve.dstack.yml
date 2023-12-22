@@ -1,7 +1,12 @@
 type: service
+# This service deploys embeddings model with TEI. Learn more at https://dstack.ai/learn/tei/
+
 image: ghcr.io/huggingface/text-embeddings-inference:latest
+
 env:
   - MODEL_ID=thenlper/gte-base
-port: 8000
-commands: 
+
+commands:
   - text-embeddings-router --hostname 0.0.0.0 --port 8000
+
+port: 8000
