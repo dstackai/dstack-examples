@@ -1,15 +1,14 @@
 type: service
 # This service deploys Mixtral with TGI. Learn more at https://dstack.ai/learn/vllm/ or https://dstack.ai/learn/mixtral/
+# Requires 100GB of total GPU memory and 200GB of disk size
 
 python: "3.11"
 
 commands:
-  - conda install cuda # required by megablocks
-  - pip install torch # required by megablocks
-  - pip install vllm megablocks
+  - pip install vllm
   - python -m vllm.entrypoints.openai.api_server
     --model mistralai/Mixtral-8X7B-Instruct-v0.1
     --host 0.0.0.0
-    --tensor-parallel-size 2 # adapt to your GPUs
+    --tensor-parallel-size 2 # Should match the number of GPUs
 
 port: 8000
