@@ -1,5 +1,5 @@
 type: service
-# This service deploys Mixtral (GPTQ) with TGI. Learn more at https://dstack.ai/learn/tgi/ or https://dstack.ai/learn/mixtral/
+# This service deploys Mixtral (GPTQ) with TGI. Learn more at https://dstack.ai/examples/tgi/ or https://dstack.ai/examples/mixtral/
 # Requires 25GB of total GPU memory
 
 image: ghcr.io/huggingface/text-generation-inference:latest
@@ -8,11 +8,15 @@ env:
   - MODEL_ID=TheBloke/Mixtral-8x7B-Instruct-v0.1-GPTQ
 
 commands:
-  - text-generation-server download-weights $MODEL_ID --trust-remote-code # https://github.com/huggingface/text-generation-inference/issues/1186
+  - text-generation-server download-weights $MODEL_ID --trust-remote-code
   - text-generation-launcher
-    --hostname 0.0.0.0
-    --port 8000
+    --port 80
     --trust-remote-code
     --quantize gptq
+port: 80
 
-port: 8000
+# Optional mapping for OpenAI-compatible endpoint
+model:
+  type: chat
+  name: TheBloke/Mixtral-8x7B-Instruct-v0.1-GPTQ
+  format: tgi

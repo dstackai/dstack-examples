@@ -1,4 +1,14 @@
 type: dev-environment
 # This configuration launches a blank dev environment
 
+# Uncomment "python" or "image" (to configure the environment)
+
+# python: 3.11
+# image: <any Docker image>
+
+# Uncomment "setup" (to pre-install packages)
+# setup:
+#   - <install anything via pip, conda, or apt-get, etc>
+#   - <...>
+
 ide: vscode

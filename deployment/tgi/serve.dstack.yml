@@ -1,12 +1,14 @@
 type: service
-# This service deploys Llama 2 with TGI. Learn more at https://dstack.ai/learn/tgi/
 
 image: ghcr.io/huggingface/text-generation-inference:latest
-
 env:
-  - MODEL_ID=NousResearch/Llama-2-7b-hf
-
+  - MODEL_ID=mistralai/Mistral-7B-Instruct-v0.1
 commands:
-  - text-generation-launcher --hostname 0.0.0.0 --port 8000 --trust-remote-code
+  - text-generation-launcher --port 80 --trust-remote-code
+port: 80
 
-port: 8000
+# Optional mapping for OpenAI-compatible endpoint
+model:
+  type: chat
+  name: mistralai/Mistral-7B-Instruct-v0.1
+  format: tgi

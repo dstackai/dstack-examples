@@ -1,12 +1,10 @@
 type: service
-# This service deploys SDXL with FastAPI. Learn more at https://dstack.ai/learn/sdxl/
+# This service deploys SDXL with FastAPI. Learn more at https://dstack.ai/examples/sdxl/
 
 python: "3.11"
-
-port: 8000
-
 commands:
   - apt-get update
   - apt-get install libgl1 -y # (required by invisible-watermark)
   - pip install -r sdxl/requirements.txt
-  - uvicorn sdxl.main:app --port 8000
+  - uvicorn sdxl.main:app --port 80
+port: 80
