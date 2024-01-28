@@ -5,6 +5,8 @@ demonstrating how to use `dstack`.
 
 ## 1. Setup
 
+Install the open-source dstack server and configure cloud credentials or opt for the [cloud version](https://dstack.ai/platform/).
+
 ### 1.1. Install dstack
 
 ```shell
@@ -13,7 +15,7 @@ pip install "dstack[all]" -U
 
 ### 1.2 Configure clouds
 
-Configure cloud credentials in `~/.dstack/server/config.yml`. [Learn more](https://dstack.ai/docs/config/server/).
+Configure cloud credentials in `~/.dstack/server/config.yml`. [Learn more](https://dstack.ai/docs/installation/).
 
 ### 1.3. Start the server
 
@@ -41,13 +43,15 @@ dstack run . --gpu 24GB
 
 ### 2.3. Run any example
 
-Here's how any example can be run:
+Here's how to run any of the examples, e.g. [`vllm`](deployment/vllm/):
 
 ```shell
 dstack run . -f deployment/vllm/serve.dstack.yml --gpu 24GB
 ```
 
+Find more details on each example at [dstack.ai/examples](https://dstack.ai/examples).
+
+
 ### More information
 
 - [Docs](https://dstack.ai/docs)
-- [See all learning materials](https://dstack.ai/learn)
