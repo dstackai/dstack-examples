@@ -5,9 +5,9 @@ from langchain_core.runnables import RunnableParallel, RunnablePassthrough
 # Specify your service url
 EMBEDDINGS_URL = "https://tasty-mole-1.examples.cloud.dstack.ai"
 
-embedding=HuggingFaceInferenceAPIEmbeddings(
+embedding = HuggingFaceInferenceAPIEmbeddings(
     api_url=EMBEDDINGS_URL,
-    api_key="", # No api key required
+    api_key="",  # No api key required
 )
 texts = [
     "The earliest known name for Great Britain is Albion (Greek: Ἀλβιών) or insula Albionum",
@@ -25,11 +25,10 @@ print(setup_and_retrieval.invoke("How was Great Britain called before?"))
 #     'question': 'How was Great Britain called before?'
 # }
 
+from langchain.llms.huggingface_text_gen_inference import \
+    HuggingFaceTextGenInference
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from langchain.llms.huggingface_text_gen_inference import (
-    HuggingFaceTextGenInference
-)
 
 # Specify your service url
 INFERENCE_URL = "https://shy-elephant-1.examples.cloud.dstack.ai"

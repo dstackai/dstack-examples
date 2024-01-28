@@ -3,17 +3,11 @@ from pathlib import Path
 
 import weaviate
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
-
-from llama_index import (
-    LangchainEmbedding,
-    ServiceContext,
-    StorageContext,
-    SimpleDirectoryReader,
-    VectorStoreIndex,
-)
-from llama_index.vector_stores import WeaviateVectorStore
+from llama_index import (LangchainEmbedding, ServiceContext,
+                         SimpleDirectoryReader, StorageContext,
+                         VectorStoreIndex)
 from llama_index.callbacks import CallbackManager, LlamaDebugHandler
-
+from llama_index.vector_stores import WeaviateVectorStore
 
 if __name__ == "__main__":
     weaviate_api_key = os.getenv("WEAVIATE_API_TOKEN")

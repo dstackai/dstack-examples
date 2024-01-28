@@ -1,18 +1,14 @@
 import os
+
 import weaviate
 from langchain import HuggingFaceTextGenInference
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
-from llama_index import (
-    LangchainEmbedding,
-    PromptHelper,
-    QuestionAnswerPrompt,
-    RefinePrompt,
-    ServiceContext,
-    VectorStoreIndex,
-)
+from llama_index import (LangchainEmbedding, PromptHelper,
+                         QuestionAnswerPrompt, RefinePrompt, ServiceContext,
+                         VectorStoreIndex)
+from llama_index.callbacks import CallbackManager, LlamaDebugHandler
 from llama_index.llm_predictor import LLMPredictor
 from llama_index.vector_stores import WeaviateVectorStore
-from llama_index.callbacks import CallbackManager, LlamaDebugHandler
 
 if __name__ == "__main__":
     weaviate_api_key = os.getenv("WEAVIATE_API_TOKEN")

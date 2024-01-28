@@ -2,13 +2,13 @@ import asyncio
 import uuid
 from pathlib import Path
 from typing import Optional
-import PIL
 
+import PIL
+import torch
+from diffusers import DiffusionPipeline, StableDiffusionXLPipeline
 from fastapi import FastAPI
-from diffusers import StableDiffusionXLPipeline, DiffusionPipeline
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
-import torch
 
 base = StableDiffusionXLPipeline.from_pretrained(
     "stabilityai/stable-diffusion-xl-base-1.0",
