@@ -7,6 +7,10 @@ port: 80
 commands:
   - text-generation-launcher --port 80 --trust-remote-code --quantize gptq
 
+resources:
+  gpu: 24GB
+
+# (Optional) Enable the OpenAI-compatible endpoint
 model:
   type: chat
   name: TheBloke/Llama-2-13B-chat-GPTQ

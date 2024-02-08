@@ -1,20 +1,22 @@
 type: service
 # This service deploys Mixtral with TGI. Learn more at https://dstack.ai/examples/tgi/ or https://dstack.ai/examples/mixtral/
-# Requires 100GB of total GPU memory and 200GB of disk size
 
 image: ghcr.io/huggingface/text-generation-inference:latest
 env:
   - MODEL_ID=mistralai/Mixtral-8x7B-Instruct-v0.1
 commands:
-  - text-generation-server download-weights $MODEL_ID --trust-remote-code
   - text-generation-launcher
     --port 80
     --trust-remote-code
     --num-shard 2 # Should match the number of GPUs
 port: 80
 
-# Optional mapping for OpenAI-compatible endpoint
+resources:
+  gpu: 80GB:2
+  disk: 200GB
+
+# (Optional) Enable the OpenAI-compatible endpoint
 model:
   type: chat
-  name: mistralai/Mixtral-8x7B-Instruct-v0.1
+  name: TheBloke/Mixtral-8x7B-Instruct-v0.1-GPTQ
   format: tgi

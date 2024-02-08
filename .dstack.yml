@@ -3,12 +3,12 @@ type: dev-environment
 
 # Uncomment "python" or "image" (to configure the environment)
 
-# python: 3.11
-# image: <any Docker image>
+python: 3.11
 
-# Uncomment "setup" (to pre-install packages)
-# setup:
-#   - <install anything via pip, conda, or apt-get, etc>
-#   - <...>
+# image: ghcr.io/huggingface/text-generation-inference:latest
 
 ide: vscode
+
+# (Optional) Configure `gpu`, `memory`, `disk`, etc
+resources:
+  gpu: 24GB

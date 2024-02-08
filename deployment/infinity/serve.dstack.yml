@@ -7,3 +7,6 @@ env:
 commands:
   - infinity_emb --model-name-or-path $MODEL_ID --port 80
 port: 80
+
+resources:
+  gpu: 16GB

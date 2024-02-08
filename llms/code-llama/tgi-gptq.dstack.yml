@@ -1,5 +1,5 @@
 type: service
-# This service deploys Code Llama 70B (GPTQ) with TGI. Learn more at https://dstack.ai/examples/code-llama/ or https://dstack.ai/examples/tgi/
+# This service deploys Code Llama 70B (GPTQ) with TGI. Learn more at https://dstack.ai/examples/tgi/
 
 image: ghcr.io/huggingface/text-generation-inference:latest
 env:
@@ -11,6 +11,9 @@ commands:
     --trust-remote-code
     --quantize gptq
 port: 80
+
+resources:
+  gpu: 80GB
 
 # Optional mapping for OpenAI-compatible endpoint
 model:

@@ -1,13 +1,19 @@
 type: service
 # This service deploys Llama 2 with vllm. Learn more at https://dstack.ai/learn/vllm/
 
-env:
-  - MODEL=NousResearch/Llama-2-7b-hf
-
-port: 8000
-
 python: "3.11"
-
+env:
+  - MODEL=NousResearch/Llama-2-7b-chat-hf
 commands:
   - pip install vllm
-  - python -m vllm.entrypoints.openai.api_server --model $MODEL --port 8000 --trust-remote-code
+  - python -m vllm.entrypoints.openai.api_server --model $MODEL --port 8000
+port: 8000
+
+resources:
+  gpu: 24GB
+
+# (Optional) Enable the OpenAI-compatible endpoint
+model:
+  format: openai
+  type: chat
+  name: NousResearch/Llama-2-7b-chat-hf

@@ -8,3 +8,6 @@ commands:
   - pip install -r sdxl/requirements.txt
   - uvicorn sdxl.main:app --port 80
 port: 80
+
+resources:
+  gpu: 16GB
