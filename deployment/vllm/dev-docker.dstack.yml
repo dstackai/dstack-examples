@@ -1,0 +1,10 @@
+type: dev-environment
+
+image: vllm/vllm-openai:latest
+env:
+  - PYTHONPATH=/workspace
+
+ide: vscode
+
+resources:
+  gpu: 24GB

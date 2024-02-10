@@ -1,5 +1,5 @@
 type: service
-# This service deploys Llama 2 with vllm. Learn more at https://dstack.ai/learn/vllm/
+# This service deploys Llama 2 with vllm. Learn more at https://dstack.ai/examples/vllm/
 
 python: "3.11"
 env:

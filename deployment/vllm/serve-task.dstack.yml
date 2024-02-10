@@ -1,0 +1,14 @@
+type: task
+# This task runs Llama 2 with vllm. Learn more at https://dstack.ai/examples/vllm/
+
+python: "3.11"
+env:
+  - MODEL=NousResearch/Llama-2-7b-chat-hf
+commands:
+  - pip install vllm
+  - python -m vllm.entrypoints.openai.api_server --model $MODEL --port 8000
+ports:
+  - 8000
+
+resources:
+  gpu: 24GB
