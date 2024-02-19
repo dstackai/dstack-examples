@@ -1,0 +1,9 @@
+type: dev-environment
+# Launches a dev environment to play with ollama
+
+image: ollama/ollama
+
+ide: vscode
+
+resources:
+  gpu: 48GB..80GB

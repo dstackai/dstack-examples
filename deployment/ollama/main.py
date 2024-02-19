@@ -3,7 +3,7 @@ from openai import OpenAI
 client = OpenAI(base_url="https://gateway.<gateway domain>", api_key="<dstack token>")
 
 completion = client.chat.completions.create(
-    model="mistralai/Mixtral-8x7B-Instruct-v0.1",
+    model="mixtral",
     messages=[
         {
             "role": "user",
