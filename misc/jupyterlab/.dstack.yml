@@ -1,0 +1,8 @@
+type: task
+
+ports:
+  - 8888
+
+commands:
+  - pip install jupyterlab
+  - jupyter lab --allow-root
