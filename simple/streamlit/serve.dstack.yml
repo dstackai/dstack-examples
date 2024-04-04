@@ -6,3 +6,6 @@ commands:
   - pip3 install streamlit
   - streamlit hello
 port: 8501
+
+# Disable authentication
+auth: false

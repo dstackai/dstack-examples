@@ -11,4 +11,4 @@ ide: vscode
 
 # (Optional) Configure `gpu`, `memory`, `disk`, etc
 resources:
-  gpu: 24GB
+  gpu: 16GB..

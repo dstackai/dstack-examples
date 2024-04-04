@@ -3,3 +3,4 @@ __pycache__
 .idea
 .dstack/profiles.yaml
 .DS_Store
+.env

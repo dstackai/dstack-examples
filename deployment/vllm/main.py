@@ -13,6 +13,9 @@ completion = client.chat.completions.create(
             "content": "Compose a poem that explains the concept of recursion in programming.",
         }
     ],
+    stream=True,
 )
 
-print(completion.choices[0].message)
+for chunk in completion:
+    print(chunk.choices[0].delta.content, end="")
+print()
