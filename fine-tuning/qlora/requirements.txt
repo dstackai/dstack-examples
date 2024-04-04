@@ -7,3 +7,4 @@ scipy
 tensorboard
 sentencepiece
 hf-transfer
+protobuf<5
