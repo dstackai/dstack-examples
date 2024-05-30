@@ -5,7 +5,7 @@ image: michaelf34/infinity:latest
 env:
   - MODEL_ID=BAAI/bge-small-en-v1.5
 commands:
-  - infinity_emb --model-name-or-path $MODEL_ID --port 80
+  - infinity_emb v2 --model-id $MODEL_ID --port 80
 port: 80
 
 resources:
